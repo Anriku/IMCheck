@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Popupwindow">
+        <item name="android:windowEnterAnimation">@anim/window_out</item>
+        <item name="android:windowExitAnimation">@anim/window_back</item>
+    </style>
+
+    <!--TextSize-->
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="text_size_small">15sp</dimen>
+    <dimen name="text_size_max">25sp</dimen>
+    <!--Margin Or Padding-->
+    <dimen name="margin">10dp</dimen>
+    <dimen name="margin_small">5dp</dimen>
+    <dimen name="margin_large">15dp</dimen>
+    <!--Radius-->
+    <dimen name="radius">10dp</dimen>
+    <dimen name="radius_small">5dp</dimen>
+
+</resources>
