@@ -2,7 +2,9 @@ package com.anriku.imcheck.MainInterface.Presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Looper;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.anriku.imcheck.Adapter.FriendsRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsFrg;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsPre;
 import com.anriku.imcheck.MainInterface.View.FriendsApplyActivity;
+import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FragmentFriendsBinding;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
@@ -71,45 +74,72 @@ public class FriendsPresenter implements IFriendsPre {
 
 
     @Override
-    public void handleApply(final Context context, final List<String> names, final List<String> reasons, FragmentFriendsBinding binding) {
+    public void handleApply(final Context context, final List<String> names, final List<String> reasons, final FragmentFriendsBinding binding) {
+
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+
+            @Override
+            public void onContactAdded(String s) {
+
+            }
+
+            @Override
+            public void onContactDeleted(String s) {
+
+            }
+
+            @Override
+            public void onContactInvited(final String s, final String s1) {
+                Log.e("Friends", "收到");
+                //消息到来进行的操作
+                Observable.create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                        names.add(s);
+                        reasons.add(s1);
+                        e.onNext("收到");
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                binding.frgFriendsTv.setBackgroundColor(Color.parseColor("#333333"));
+                            }
+                        });
+            }
+
+            @Override
+            public void onFriendRequestAccepted(String s) {
+
+            }
+
+            @Override
+            public void onFriendRequestDeclined(String s) {
+
+            }
+        });
+
         binding.frgFriendsTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(context, FriendsApplyActivity.class);
-
-                EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
-
-                    @Override
-                    public void onContactAdded(String s) {
-
-                    }
-
-                    @Override
-                    public void onContactDeleted(String s) {
-
-                    }
-
-                    @Override
-                    public void onContactInvited(String s, String s1) {
-                        Log.e("Friends", "收到");
-                        names.add(s);
-                        reasons.add(s1);
-                    }
-
-                    @Override
-                    public void onFriendRequestAccepted(String s) {
-
-                    }
-
-                    @Override
-                    public void onFriendRequestDeclined(String s) {
-
-                    }
-                });
-
                 intent.putStringArrayListExtra("names", (ArrayList<String>) names);
                 intent.putStringArrayListExtra("reasons", (ArrayList<String>) reasons);
                 context.startActivity(intent);
+                binding.frgFriendsTv.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        });
+    }
+
+    @Override
+    public void refreshFriends(final Context context, final FragmentFriendsBinding binding) {
+        binding.frgFriendsSrl.setColorSchemeResources(R.color.colorAccent);
+        binding.frgFriendsSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getFriends(context,binding);
+                binding.frgFriendsSrl.setRefreshing(false);
             }
         });
     }

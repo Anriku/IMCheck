@@ -41,24 +41,22 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SharedPreferences pref = context.getSharedPreferences("account",Context.MODE_PRIVATE);
-        String account = pref.getString("name","");
+        SharedPreferences pref = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+        String account = pref.getString("name", "");
 
-        Toast.makeText(context,account  + " " + emMessages.get(position).getUserName() ,Toast.LENGTH_SHORT).show();
-
-        if (account.equals(emMessages.get(position).getFrom())){
-            try {
-                holder.binding.messageRecItemRightTv.setText(emMessages.get(position).getStringAttribute("txt"));
-            } catch (HyphenateException e) {
-                e.printStackTrace();
-            }
-        }else {
+        if (account.equals(emMessages.get(position).getFrom())) {
+            holder.binding.messageRecItemRightTv.setText(String.valueOf(emMessages.get(position).getBody().toString().split("\"")[1]));
+            holder.binding.messageRecItemRightTv.setVisibility(View.VISIBLE);
+            holder.binding.messageRecItemRightCiv.setVisibility(View.VISIBLE);
+            holder.binding.messageRecItemLeftTv.setVisibility(View.GONE);
+            holder.binding.messageRecItemLeftCiv.setVisibility(View.GONE);
+        } else {
             holder.binding.messageRecItemRightTv.setVisibility(View.GONE);
             holder.binding.messageRecItemRightCiv.setVisibility(View.GONE);
             holder.binding.messageRecItemLeftTv.setVisibility(View.VISIBLE);
             holder.binding.messageRecItemLeftCiv.setVisibility(View.VISIBLE);
 
-            holder.binding.messageRecItemLeftTv.setText(emMessages.get(position).getBody().toString());
+            holder.binding.messageRecItemLeftTv.setText(emMessages.get(position).getBody().toString().split("\"")[1]);
         }
     }
 

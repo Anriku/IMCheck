@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 /**
@@ -24,7 +25,7 @@ public class PopupWindowUtil {
     private PopupWindow popupWindow;
     private float alpha = 1f;
     private LayoutInflater inflater;
-    private FrameLayout frameLayout;//用于返回后后面好调用布局文件的控件
+    private LinearLayout linearLayout;//用于返回后后面好调用布局文件的控件
     private static PopupWindowUtil popupWindowUtil;
 
     private Handler handler = new Handler() {
@@ -46,7 +47,7 @@ public class PopupWindowUtil {
         this.animationStyle = animationStyle;
         this.inflater = inflater;
         this.window = window;
-        frameLayout = (FrameLayout) inflater.inflate(resource, null);
+        linearLayout = (LinearLayout) inflater.inflate(resource, null);
     }
 
     //使用单例模式防止不停按button不停建,开始一直不知道为什么会重建，怎了好久!!!555
@@ -61,8 +62,8 @@ public class PopupWindowUtil {
         return popupWindow;
     }
 
-    public FrameLayout getFrameLayout() {
-        return frameLayout;
+    public LinearLayout getLinearLayout() {
+        return linearLayout;
     }
 
     public void bottomWindow(View view) {
@@ -70,10 +71,10 @@ public class PopupWindowUtil {
             return;
         }
 
-        popupWindow = new PopupWindow(frameLayout, ViewGroup.LayoutParams.MATCH_PARENT,
+        popupWindow = new PopupWindow(linearLayout, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(false);
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setAnimationStyle(animationStyle);
         //特别重要,定位置
         int[] location = new int[2];

@@ -14,4 +14,5 @@ import java.util.List;
 public interface IFriendsPre {
     void getFriends(Context context, FragmentFriendsBinding binding);
     void handleApply(Context context, List<String> names,List<String> reasons,FragmentFriendsBinding binding);
+    void refreshFriends(Context context,FragmentFriendsBinding binding);
 }

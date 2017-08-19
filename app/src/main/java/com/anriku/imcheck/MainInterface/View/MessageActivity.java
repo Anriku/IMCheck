@@ -26,6 +26,7 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct{
         initView();
 
         iMessagePre.chat(this,obj,binding);
+        iMessagePre.getHistory(this,obj,binding);
     }
 
     private void initView() {

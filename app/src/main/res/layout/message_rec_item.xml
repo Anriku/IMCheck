@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -16,28 +17,33 @@
 
         <TextView
             android:id="@+id/message_rec_item_left_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@id/message_rec_item_left_civ"
             android:background="@drawable/message_left"
+            android:gravity="center"
+            android:textSize="@dimen/text_size"
             android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/message_rec_item_right_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/message_right" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/message_rec_item_right_civ"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_alignParentRight="true"
             android:scaleType="centerCrop"
             android:src="@drawable/potrait" />
 
+        <TextView
+            android:id="@+id/message_rec_item_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/message_rec_item_right_civ"
+            android:background="@drawable/message_right"
+            android:gravity="center"
+            android:textSize="@dimen/text_size" />
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
 
 </layout>

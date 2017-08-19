@@ -12,6 +12,7 @@
             android:layout_height="80dp"
             android:textSize="@dimen/text_size"
             android:text="好友申请"
+            android:gravity="center"
             android:padding="@dimen/margin"/>
 
         <View
@@ -19,12 +20,19 @@
             android:layout_height="10dp"
             android:background="@mipmap/item_divider" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/frg_friends_rv"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/frg_friends_srl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/frg_friends_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 

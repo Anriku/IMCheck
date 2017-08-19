@@ -1,6 +1,7 @@
 package com.anriku.imcheck.MainInterface.Presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import com.anriku.imcheck.Adapter.FriendsSearchRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.ISearchFriendAct;
 import com.anriku.imcheck.MainInterface.Interface.ISearchFriendPre;
 import com.anriku.imcheck.databinding.ActivitySearchFriendBinding;
+import com.hyphenate.chat.EMClient;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
@@ -21,6 +23,14 @@ import com.wilddog.client.WilddogSync;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anriku on 2017/8/18.
@@ -47,19 +57,37 @@ public class SearchFriendPresenter implements ISearchFriendPre {
                 SyncReference reference = WilddogSync.getInstance().getReference("accounts");
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<String> names = new ArrayList<>();
-                        Iterator iterator = dataSnapshot.getChildren().iterator();
-                        while (iterator.hasNext()) {
-                            DataSnapshot snapshot = (DataSnapshot) iterator.next();
-                            if (String.valueOf(snapshot.getValue()).contains(binding.acAddFriendEt.getText().toString())) {
-                                names.add(String.valueOf(snapshot.getValue()));
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        Observable.create(new ObservableOnSubscribe<List<String>>() {
+                            @Override
+                            public void subscribe(@NonNull ObservableEmitter<List<String>> e) throws Exception {
+                                List<String> friends = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                                SharedPreferences pref = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+                                String account = pref.getString("name", "");
+                                friends.add(account);
+                                e.onNext(friends);
                             }
-                        }
-                        LinearLayoutManager manager = new LinearLayoutManager(context);
-                        FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context,names);
-                        binding.acAddFriendRv.setLayoutManager(manager);
-                        binding.acAddFriendRv.setAdapter(adapter);
+                        }).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<List<String>>() {
+                                    @Override
+                                    public void accept(List<String> strings) throws Exception {
+                                        List<String> names = new ArrayList<>();
+                                        Iterator iterator = dataSnapshot.getChildren().iterator();
+                                        while (iterator.hasNext()) {
+                                            DataSnapshot snapshot = (DataSnapshot) iterator.next();
+                                            if (String.valueOf(snapshot.getValue()).contains(binding.acAddFriendEt.getText().toString())
+                                                    && !strings.contains(String.valueOf(snapshot.getValue()))) {
+                                                names.add(String.valueOf(snapshot.getValue()));
+                                            }
+                                        }
+                                        LinearLayoutManager manager = new LinearLayoutManager(context);
+                                        FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context, names);
+                                        binding.acAddFriendRv.setLayoutManager(manager);
+                                        binding.acAddFriendRv.setAdapter(adapter);
+                                    }
+                                });
                     }
 
                     @Override

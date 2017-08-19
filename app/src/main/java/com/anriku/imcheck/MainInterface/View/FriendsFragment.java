@@ -47,6 +47,7 @@ public class FriendsFragment extends Fragment implements IFriendsFrg{
         iFriendsPre = new FriendsPresenter(this);
         iFriendsPre.getFriends(getContext(),binding);
         iFriendsPre.handleApply(getContext(),names,reasons,binding);
+        iFriendsPre.refreshFriends(getContext(),binding);
     }
 
 

@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfaceAct;
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfacePre;
 import com.anriku.imcheck.MainInterface.Presenter.MainInterfacePresenter;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.ActivityMainInterfaceBinding;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
 public class MainInterfaceActivity extends AppCompatActivity implements IMainInterfaceAct{
@@ -51,7 +54,22 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
 
     @Override
     protected void onDestroy() {
-        EMClient.getInstance().logout(true);
+        //在退出主界面时登出
+        EMClient.getInstance().logout(true, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                Log.d("MainInterface","退出成功");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+            }
+
+            @Override
+            public void onError(int code, String message) {
+            }
+        });
         super.onDestroy();
     }
 }

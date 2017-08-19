@@ -10,4 +10,5 @@ import com.anriku.imcheck.databinding.ActivityMessageBinding;
 
 public interface IMessagePre {
     void chat(Context context,String obj, ActivityMessageBinding binding);
+    void getHistory(Context context,String obj,ActivityMessageBinding binding);
 }

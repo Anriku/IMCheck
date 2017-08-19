@@ -3,7 +3,9 @@ package com.anriku.imcheck.LoginAndRegister.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,13 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Anriku on 2017/8/17.
@@ -57,11 +66,11 @@ public class RegisterPresenter implements IRegisterPre {
                                             public void onSuccess() {
                                                 EMClient.getInstance().groupManager().loadAllGroups();
                                                 EMClient.getInstance().chatManager().loadAllConversations();
+
                                                 //对登录账户进行记录
-                                                SharedPreferences.Editor editor = context.getSharedPreferences("account",Context.MODE_PRIVATE).edit();
-                                                editor.putString("name",binding.acRegisterAccountEt.getText().toString());
+                                                SharedPreferences.Editor editor = context.getSharedPreferences("account", Context.MODE_PRIVATE).edit();
+                                                editor.putString("name", binding.acRegisterAccountEt.getText().toString());
                                                 editor.apply();
-                                                Log.d("login", "登录聊天服务器成功");
                                             }
 
                                             @Override
@@ -71,19 +80,31 @@ public class RegisterPresenter implements IRegisterPre {
 
                                             @Override
                                             public void onProgress(int i, String s) {
-                                                Log.d("login", "登录聊天服务器失败");
+
                                             }
                                         });
+
                                 //进行用户的保存以便查询
                                 SyncReference reference = WilddogSync.getInstance().getReference("accounts");
                                 reference.push().setValue(binding.acRegisterAccountEt.getText().toString());
                                 context.startActivity(new Intent(context, MainInterfaceActivity.class));
                                 ((RegisterActivity) context).finish();
+
                             } catch (HyphenateException e) {
                                 e.printStackTrace();
-                                Looper.prepare();
-                                Toast.makeText(context, "注册失败，用户已存在", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+                                //进行Toast
+                                Observable.create(new ObservableOnSubscribe<String>() {
+                                    @Override
+                                    public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                                        e.onNext("注册失败，用户已存在");
+                                    }
+                                }).observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<String>() {
+                                            @Override
+                                            public void accept(String s) throws Exception {
+                                                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
                         }
                     }).start();
