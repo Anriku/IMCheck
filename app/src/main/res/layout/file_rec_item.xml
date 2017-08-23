@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/margin_small"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/file_rec_item_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/msg_file" />
+
+        <TextView
+            android:id="@+id/file_rec_item_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/file_rec_item_iv" />
+
+        <TextView
+            android:id="@+id/file_rec_item_owner_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/file_rec_item_iv" />
+
+        <TextView
+            android:id="@+id/file_rec_item_update_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/file_rec_item_size_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+</layout>

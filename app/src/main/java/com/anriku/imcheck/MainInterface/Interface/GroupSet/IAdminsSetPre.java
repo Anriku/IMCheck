@@ -10,6 +10,4 @@ import com.anriku.imcheck.databinding.ActivityAdminsSetBinding;
 
 public interface IAdminsSetPre {
     void getAdmins(Context context, ActivityAdminsSetBinding binding,String obj);
-    void getMembers(Context context,ActivityAdminsSetBinding binding,String obj);
-    void inviteNewMember(Context context,ActivityAdminsSetBinding binding,String obj);
 }

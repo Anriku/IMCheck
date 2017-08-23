@@ -35,6 +35,7 @@ import com.anriku.imcheck.databinding.ActivityMessageBinding;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anriku on 2017/8/18.
@@ -60,6 +62,29 @@ public class MessagePresenter implements IMessagePre {
 
     public MessagePresenter(IMessageAct iMessageAct) {
         this.iMessageAct = iMessageAct;
+    }
+
+    @Override
+    public void setChatObj(Context chatObj, final ActivityMessageBinding binding, final String obj, boolean isGroup) {
+        if (isGroup){
+            Observable.create(new ObservableOnSubscribe<EMGroup>() {
+                @Override
+                public void subscribe(@NonNull ObservableEmitter<EMGroup> e) throws Exception {
+                    EMGroup emGroup = EMClient.getInstance().groupManager().getGroup(obj);
+                    e.onNext(emGroup);
+                }
+            })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<EMGroup>() {
+                        @Override
+                        public void accept(EMGroup emGroup) throws Exception {
+                            binding.acMessageObjTv.setText(emGroup.getGroupName());
+                        }
+                    });
+        }else {
+            binding.acMessageObjTv.setText(obj);
+        }
     }
 
     @Override

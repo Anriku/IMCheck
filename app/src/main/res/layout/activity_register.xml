@@ -36,6 +36,7 @@
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:gravity="center"
+                android:padding="@dimen/margin"
                 android:orientation="vertical">
 
                 <EditText
@@ -72,6 +73,7 @@
                     android:id="@+id/ac_register_register_bt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_backgroud_bt"
                     android:text="注册" />
 
             </LinearLayout>

@@ -51,6 +51,7 @@ public class FriendsPresenter implements IFriendsPre {
                 List<String> names = new ArrayList<>();
                 try {
                     names = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    names.removeAll(EMClient.getInstance().contactManager().getBlackListFromServer());
                 } catch (HyphenateException e1) {
                     e1.printStackTrace();
                 }

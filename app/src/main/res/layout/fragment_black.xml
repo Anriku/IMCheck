@@ -9,6 +9,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frg_black_rv"
+            android:layout_margin="@dimen/margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

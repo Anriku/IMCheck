@@ -43,11 +43,11 @@ public class FriendsRecAdapter extends RecyclerView.Adapter<FriendsRecAdapter.Vi
     private String[] invites;
     private List<String> listInvites;
     private String groupId;
+    private int admins;
     public static final int FRIEND = 0;
     public static final int BLACK = 1;
-    public static final int ADMIN = 3;
-    public static final int MEMBER = 4;
-    public static final int INVITE = 5;
+    public static final int LIST = 2;
+    public static final int INVITE = 3;
     private int type;
 
     public FriendsRecAdapter(Context context, List<String> names, int type) {
@@ -70,7 +70,6 @@ public class FriendsRecAdapter extends RecyclerView.Adapter<FriendsRecAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.binding.friendsRecItemTv.setText(names.get(position));
 
-
         if (type == FRIEND || type == BLACK) {
             //进行对话界面的跳转
             holder.binding.friendsRecItemTv.setOnClickListener(new View.OnClickListener() {
@@ -83,64 +82,95 @@ public class FriendsRecAdapter extends RecyclerView.Adapter<FriendsRecAdapter.Vi
                 }
             });
             setLongClick(holder, position);
-        } else if (type == ADMIN) {
-            holder.binding.friendsRecItemDelete.setVisibility(View.VISIBLE);
-            holder.binding.friendsRecItemDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Observable.create(new ObservableOnSubscribe<String>() {
-                        @Override
-                        public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
-                            EMClient.getInstance().groupManager().removeGroupAdmin(groupId, names.get(position));
-                        }
-                    })
-                            .subscribeOn(Schedulers.io())
-                            .subscribeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<String>() {
-                                @Override
-                                public void accept(String s) throws Exception {
-                                    Toast.makeText(context, "取消管理员成功", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
-        } else if (type == MEMBER) {
-            holder.binding.friendsRecItemDelete.setVisibility(View.GONE);
-            holder.binding.friendsRecItemAdd.setVisibility(View.VISIBLE);
+        } else if (type == LIST) {
+            holder.binding.friendsRecItemDegreeTv.setVisibility(View.VISIBLE);
+            if (position == 0) {
+                holder.binding.friendsRecItemDegreeTv.setText("群主");
+                holder.binding.friendsRecItemAdd.setVisibility(View.GONE);
+                holder.binding.friendsRecItemDelete.setVisibility(View.GONE);
+            } else if (position > 0 && position <= admins) {
+                holder.binding.friendsRecItemDegreeTv.setText("管理员");
+                holder.binding.friendsRecItemAdd.setVisibility(View.GONE);
+                holder.binding.friendsRecItemDelete.setVisibility(View.VISIBLE);
+                //设置删除监听
+                holder.binding.friendsRecItemDelete.setVisibility(View.VISIBLE);
+                holder.binding.friendsRecItemDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Observable.create(new ObservableOnSubscribe<String>() {
+                            @Override
+                            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                                EMClient.getInstance().groupManager().removeGroupAdmin(groupId, names.get(position));
+                                //进行动态变换
+                                String name = names.get(position);
+                                names.remove(position);
+                                names.add(name);
+                                admins--;
+                                e.onNext("取消管理员成功");
+                            }
+                        })
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<String>() {
+                                    @Override
+                                    public void accept(String s) throws Exception {
+                                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                                        notifyDataSetChanged();
+                                    }
+                                });
 
-            holder.binding.friendsRecItemAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Observable.create(new ObservableOnSubscribe<String>() {
-                        @Override
-                        public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
-                            EMClient.getInstance().groupManager().addGroupAdmin(groupId, names.get(position));
-                            e.onNext("添加成功");
-                        }
-                    })
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<String>() {
-                                @Override
-                                public void accept(String s) throws Exception {
-                                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
+                    }
+                });
+            } else {
+                holder.binding.friendsRecItemDegreeTv.setText("成员");
+                holder.binding.friendsRecItemAdd.setVisibility(View.VISIBLE);
+                holder.binding.friendsRecItemDelete.setVisibility(View.GONE);
+
+                holder.binding.friendsRecItemAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Observable.create(new ObservableOnSubscribe<String>() {
+                            @Override
+                            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                                EMClient.getInstance().groupManager().addGroupAdmin(groupId, names.get(position));
+
+                                //进行动态变换
+                                String name = names.get(position);
+                                names.remove(position);
+                                names.add(admins, name);
+                                admins++;
+                                e.onNext("添加成功");
+                            }
+                        })
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<String>() {
+                                    @Override
+                                    public void accept(String s) throws Exception {
+                                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                                        notifyDataSetChanged();
+                                    }
+                                });
+
+                    }
+                });
+
+            }
+
         } else if (type == INVITE) {
+            //邀请好友入群
             holder.binding.friendsRecItemDelete.setVisibility(View.GONE);
             holder.binding.friendsRecItemAdd.setVisibility(View.GONE);
 
             holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (listInvites.contains(names.get(position))){
+                    if (listInvites.contains(names.get(position))) {
                         invites = new String[names.size()];
                         invites[position] = null;
                         listInvites.remove(names.get(position));
                         holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
-                    }else {
+                    } else {
                         invites = new String[names.size()];
                         invites[position] = names.get(position);
                         listInvites.add(names.get(position));
@@ -193,9 +223,12 @@ public class FriendsRecAdapter extends RecyclerView.Adapter<FriendsRecAdapter.Vi
                             try {
                                 EMClient.getInstance().contactManager().addUserToBlackList(names.get(position), true);
                                 popupWindowUtil.getPopupWindow().dismiss();
+                                names.remove(position);
+                                notifyDataSetChanged();
                                 Toast.makeText(context, "加入黑名单成功", Toast.LENGTH_SHORT).show();
                             } catch (HyphenateException e) {
                                 e.printStackTrace();
+
                                 Toast.makeText(context, "加入黑名单失败", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -231,8 +264,11 @@ public class FriendsRecAdapter extends RecyclerView.Adapter<FriendsRecAdapter.Vi
     }
 
     public String[] getInvites() {
-        Log.e("getInvites: ", String.valueOf(invites.length));
         return invites;
+    }
+
+    public void setAdmins(int admins) {
+        this.admins = admins;
     }
 
     public void setGroupId(String groupId) {

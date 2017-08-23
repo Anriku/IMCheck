@@ -3,12 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/admins_set_add"
-        android:icon="@mipmap/add"
+        android:icon="@mipmap/add_white"
         android:title="添加"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/admins_set_edit"
-        android:title="编辑"
-        app:showAsAction="always" />
 </menu>

@@ -18,12 +18,16 @@
                 android:id="@+id/is_send_origin_image_yes_bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:background="@drawable/ripple_backgroud_bt"
                 android:text="发送原图" />
 
             <Button
                 android:id="@+id/is_send_origin_image_no_bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:background="@drawable/ripple_backgroud_bt"
                 android:text="不发原图" />
 
         </LinearLayout>

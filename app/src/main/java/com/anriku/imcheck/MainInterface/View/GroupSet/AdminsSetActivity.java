@@ -2,6 +2,7 @@ package com.anriku.imcheck.MainInterface.View.GroupSet;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,24 +28,25 @@ public class AdminsSetActivity extends AppCompatActivity implements IAdminsSetAc
         Intent intent = getIntent();
         obj = intent.getStringExtra("id");
 
-        setSupportActionBar(binding.acMainInterfaceTb);
+        binding.acAdminsSetTb.setTitle("");
+        setSupportActionBar(binding.acAdminsSetTb);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         iAdminsSetPre.getAdmins(this, binding, obj);
-        iAdminsSetPre.getMembers(this, binding, obj);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admins_set_menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.admins_set_add:
-                iAdminsSetPre.inviteNewMember(this,binding,obj);
+            case android.R.id.home:
+                finish();
                 break;
-            case R.id.admins_set_edit:
+            default:
                 break;
         }
         return true;

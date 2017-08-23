@@ -2,6 +2,7 @@ package com.anriku.imcheck.MainInterface.View.GroupSet;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +38,13 @@ public class InviteMembersActivity extends AppCompatActivity implements IInviteM
         binding = DataBindingUtil.setContentView(this, R.layout.activity_invite_members);
         iInviteMembersPre = new InviteMembersPresenter(this);
 
+        binding.acInviteMembersTb.setTitle("");
         setSupportActionBar(binding.acInviteMembersTb);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setHomeAsUpIndicator(R.mipmap.back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
         obj = intent.getStringExtra("id");
@@ -55,6 +62,9 @@ public class InviteMembersActivity extends AppCompatActivity implements IInviteM
         switch (item.getItemId()) {
             case R.id.invite_members_menu_finish:
                 iInviteMembersPre.inviteFriends(InviteMembersActivity.this,binding,obj);
+                break;
+            case android.R.id.home:
+                finish();
                 break;
             default:
                 break;

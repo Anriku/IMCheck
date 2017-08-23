@@ -10,7 +10,7 @@
         tools:context="com.anriku.imcheck.MainInterface.View.GroupSet.AdminsSetActivity">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/ac_main_interface_tb"
+            android:id="@+id/ac_admins_set_tb"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -27,31 +27,12 @@
         </android.support.v7.widget.Toolbar>
 
 
-
-            <TextView
-                android:id="@+id/ac_admins_set_tv"
-                android:gravity="center"
-                android:textSize="@dimen/text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ac_admins_set_admin_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@mipmap/item_divider"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/ac_admins_set_member_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

@@ -6,15 +6,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/margin">
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ac_search_tb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="查询"
+                android:textSize="@dimen/text_size" />
+
+        </android.support.v7.widget.Toolbar>
+
 
         <CheckBox
-            android:id="@+id/ac_search_friend_cb"
+            android:id="@+id/ac_search_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="@dimen/text_size"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="@dimen/margin"
             android:text="是否查找群" />
 
         <LinearLayout
@@ -35,18 +54,18 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/ac_add_friend_iv"
+                        android:id="@+id/ac_search_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@mipmap/search" />
 
                     <EditText
-                        android:id="@+id/ac_add_friend_et"
+                        android:id="@+id/ac_search_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="请输入你要搜索的账号"
-                        android:textSize="@dimen/text_size" />
+                        android:hint="请输入你要搜索的账号或群号"
+                        android:textSize="@dimen/text_size_small" />
 
                 </LinearLayout>
 
@@ -54,7 +73,7 @@
             </android.support.v7.widget.CardView>
 
             <TextView
-                android:id="@+id/ac_add_friend_tv"
+                android:id="@+id/ac_search_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin"
@@ -65,7 +84,8 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/ac_add_friend_rv"
+            android:id="@+id/ac_search_rv"
+            android:layout_margin="@dimen/margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

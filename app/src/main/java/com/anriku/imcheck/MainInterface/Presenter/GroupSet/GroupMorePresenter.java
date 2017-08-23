@@ -1,4 +1,4 @@
-package com.anriku.imcheck.MainInterface.Presenter;
+package com.anriku.imcheck.MainInterface.Presenter.GroupSet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,17 @@ import android.widget.Toast;
 import com.anriku.imcheck.MainInterface.Interface.IGroupMoreAct;
 import com.anriku.imcheck.MainInterface.Interface.IGroupMorePre;
 import com.anriku.imcheck.MainInterface.View.GroupSet.AdminsSetActivity;
+import com.anriku.imcheck.MainInterface.View.GroupSet.GroupModifyActivity;
+import com.anriku.imcheck.MainInterface.View.GroupSet.InviteMembersActivity;
+import com.anriku.imcheck.MainInterface.View.GroupSet.NoticeActivity;
+import com.anriku.imcheck.databinding.ActivityAdminsSetBinding;
 import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.exceptions.HyphenateException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -35,6 +42,63 @@ public class GroupMorePresenter implements IGroupMorePre {
     }
 
     @Override
+    public void inviteNewMember(final Context context, final ActivityGroupMoreBinding binding, final String obj) {
+        Observable.create(new ObservableOnSubscribe<EMGroup>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<EMGroup> e) throws Exception {
+                EMGroup emGroup = EMClient.getInstance().groupManager().getGroupFromServer(obj);
+                e.onNext(emGroup);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<EMGroup>() {
+                    @Override
+                    public void accept(EMGroup emGroup) throws Exception {
+                        //获取群主以及管理员
+                        List<String> names = new ArrayList<>();
+                        String owner = emGroup.getOwner();
+                        names.add(owner);
+                        names.addAll(emGroup.getAdminList());
+                        //获取登录用户
+                        SharedPreferences pref = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+                        String login = pref.getString("name", "");
+                        //进行是否能邀请的判断
+                        if (!emGroup.isPublic()) {
+                            if (!emGroup.isMemberAllowToInvite()) {
+                                if (names.contains(login)) {
+                                    binding.acGroupInviteTv.setVisibility(View.VISIBLE);
+                                } else {
+                                    binding.acGroupInviteTv.setVisibility(View.GONE);
+                                }
+                            } else {
+                                binding.acGroupInviteTv.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            if (!emGroup.isMemberOnly()) {
+                                binding.acGroupInviteTv.setVisibility(View.VISIBLE);
+                            } else {
+                                if (owner.equals(login)) {
+                                    binding.acGroupInviteTv.setVisibility(View.VISIBLE);
+                                } else {
+                                    binding.acGroupInviteTv.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+
+                        binding.acGroupInviteTv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(context, InviteMembersActivity.class);
+                                intent.putExtra("id", obj);
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                });
+    }
+
+    @Override
     public void adminsSet(final Context context, ActivityGroupMoreBinding binding, final String obj) {
         binding.acGroupMoreAdminTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +109,7 @@ public class GroupMorePresenter implements IGroupMorePre {
             }
         });
     }
+
 
     @Override
     public void exitOrDissolveGroup(final Context context, final ActivityGroupMoreBinding binding, final String obj) {
@@ -113,7 +178,7 @@ public class GroupMorePresenter implements IGroupMorePre {
                                             .subscribe(new Consumer<String>() {
                                                 @Override
                                                 public void accept(String s) throws Exception {
-                                                    Toast.makeText(context,"退出成功",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "退出成功", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -121,5 +186,29 @@ public class GroupMorePresenter implements IGroupMorePre {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void modifyGroup(final Context context, ActivityGroupMoreBinding binding, final String obj) {
+        binding.acGroupMoreModifyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GroupModifyActivity.class);
+                intent.putExtra("id", obj);
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void lookNotice(final Context context, ActivityGroupMoreBinding binding, final String obj) {
+        binding.acGroupMoreNoticeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, NoticeActivity.class);
+                intent.putExtra("id", obj);
+                context.startActivity(intent);
+            }
+        });
     }
 }

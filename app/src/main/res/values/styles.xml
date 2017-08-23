@@ -38,4 +38,8 @@
     <dimen name="size_card">40dp</dimen>
     <dimen name="pic_margin">15dp</dimen>
 
+    <!--portrait-->
+    <dimen name="portrait_size">60dp</dimen>
+
+
 </resources>

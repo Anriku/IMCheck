@@ -36,7 +36,8 @@
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/margin">
 
                 <EditText
                     android:id="@+id/ac_login_account_et"
@@ -61,12 +62,16 @@
                     android:id="@+id/ac_login_login_bt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:background="@drawable/ripple_backgroud_bt"
                     android:text="登录" />
 
                 <Button
                     android:id="@+id/ac_login_register_bt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:background="@drawable/ripple_backgroud_bt"
                     android:text="注册" />
             </LinearLayout>
         </android.support.v7.widget.CardView>

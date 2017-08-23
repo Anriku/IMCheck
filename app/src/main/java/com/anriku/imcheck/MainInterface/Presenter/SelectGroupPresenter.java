@@ -91,6 +91,7 @@ public class SelectGroupPresenter implements ISelectGroupPre {
                             EMGroup emGroup = EMClient.getInstance().groupManager().createGroup(binding.acSelectGroupNameEt.getText().toString(),
                                     binding.acSelectGroupDescEt.getText().toString(), strings, null, options);
 
+                            //如果是公有群就写入野狗中
                             if (emGroup.isPublic()) {
                                 SyncReference reference = WilddogSync.getInstance().getReference("groups");
                                 reference.child(emGroup.getGroupId()).setValue(emGroup.isMemberOnly());

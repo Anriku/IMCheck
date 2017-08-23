@@ -2,9 +2,11 @@ package com.anriku.imcheck.MainInterface.View;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.MenuItem;
 
 import com.anriku.imcheck.Adapter.FriendsApplyRecAdapter;
 import com.anriku.imcheck.Adapter.GroupsApplyRecAdapter;
@@ -22,6 +24,14 @@ public class ApplyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_apply);
+
+        binding.acApplyTb.setTitle("");
+        setSupportActionBar(binding.acApplyTb);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         getApplys();
     }
@@ -45,5 +55,15 @@ public class ApplyActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
 }

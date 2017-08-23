@@ -63,7 +63,7 @@
         </receiver>
 
         <activity android:name=".LoginAndRegister.View.RegisterActivity" />
-        <activity android:name=".MainInterface.View.SearchFriendActivity" />
+        <activity android:name=".MainInterface.View.SearchActivity" />
         <activity android:name=".MainInterface.View.ApplyActivity" />
         <activity android:name=".MainInterface.View.MessageActivity" />
         <activity
@@ -73,9 +73,13 @@
         <service android:name=".Utils.DownloadService" />
 
         <activity android:name=".MainInterface.View.SelectGroupActivity" />
-        <activity android:name=".MainInterface.View.GroupMoreActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.GroupMoreActivity" />
         <activity android:name=".MainInterface.View.GroupSet.AdminsSetActivity" />
-        <activity android:name=".MainInterface.View.GroupSet.InviteMembersActivity"></activity>
+        <activity android:name=".MainInterface.View.GroupSet.InviteMembersActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.GroupModifyActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.NoticeActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.NoticeModifyActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.FileActivity"></activity>
     </application>
 
 </manifest>

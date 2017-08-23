@@ -2,6 +2,7 @@ package com.anriku.imcheck.MainInterface.Presenter.GroupSet;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,7 +12,10 @@ import com.anriku.imcheck.MainInterface.Interface.GroupSet.IInviteMembersPre;
 import com.anriku.imcheck.MainInterface.View.GroupSet.InviteMembersActivity;
 import com.anriku.imcheck.databinding.ActivityInviteMembersBinding;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMCursorResult;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -30,6 +34,7 @@ public class InviteMembersPresenter implements IInviteMembersPre {
 
     private IInviteMembersAct iInviteMembersAct;
     private FriendsRecAdapter adapter;
+    private List<String> names;
 
     public InviteMembersPresenter(IInviteMembersAct iInviteMembersAct) {
         this.iInviteMembersAct = iInviteMembersAct;
@@ -40,7 +45,20 @@ public class InviteMembersPresenter implements IInviteMembersPre {
         Observable.create(new ObservableOnSubscribe<List<String>>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<List<String>> e) throws Exception {
-                List<String> names = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                names = EMClient.getInstance().contactManager().getAllContactsFromServer();
+
+                List<String> members = new ArrayList<>();
+                EMCursorResult<String> result = null;
+                final int pageSize = 20;
+                do {
+                    result = EMClient.getInstance().groupManager().fetchGroupMembers(obj,
+                            result != null ? result.getCursor() : "", pageSize);
+                    members.addAll(result.getData());
+                }
+                while (!TextUtils.isEmpty(result.getCursor()) && result.getData().size() == pageSize);
+
+                names.removeAll(members);
+
                 e.onNext(names);
             }
         })
@@ -51,7 +69,6 @@ public class InviteMembersPresenter implements IInviteMembersPre {
                     public void accept(List<String> strings) throws Exception {
                         LinearLayoutManager manager = new LinearLayoutManager(context);
                         adapter = new FriendsRecAdapter(context, strings, FriendsRecAdapter.INVITE);
-                        Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
                         adapter.setGroupId(obj);
                         binding.acInviteMembersRv.setLayoutManager(manager);
                         binding.acInviteMembersRv.setAdapter(adapter);
@@ -75,6 +92,11 @@ public class InviteMembersPresenter implements IInviteMembersPre {
                     @Override
                     public void accept(String s) throws Exception {
                         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                        //进行即时更新UI
+                        List<String> invites;
+                        invites = Arrays.asList(adapter.getInvites());
+                        names.removeAll(invites);
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }

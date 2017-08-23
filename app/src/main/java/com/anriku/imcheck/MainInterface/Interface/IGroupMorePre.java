@@ -2,6 +2,7 @@ package com.anriku.imcheck.MainInterface.Interface;
 
 import android.content.Context;
 
+import com.anriku.imcheck.databinding.ActivityAdminsSetBinding;
 import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 
 /**
@@ -10,8 +11,14 @@ import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 
 public interface IGroupMorePre {
 
-    void adminsSet(Context context, ActivityGroupMoreBinding binding,String obj);
+    void inviteNewMember(Context context, ActivityGroupMoreBinding binding, String obj);
 
-    void exitOrDissolveGroup(Context context,ActivityGroupMoreBinding binding,String obj);
+    void adminsSet(Context context, ActivityGroupMoreBinding binding, String obj);
+
+    void exitOrDissolveGroup(Context context, ActivityGroupMoreBinding binding, String obj);
+
+    void modifyGroup(Context context, ActivityGroupMoreBinding binding, String obj);
+
+    void lookNotice(Context context, ActivityGroupMoreBinding binding, String obj);
 
 }

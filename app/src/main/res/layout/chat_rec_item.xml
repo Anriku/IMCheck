@@ -4,6 +4,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:padding="@dimen/margin_small"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView

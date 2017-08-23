@@ -7,7 +7,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.anriku.imcheck.MainInterface.View.GroupMoreActivity">
+        tools:context="com.anriku.imcheck.MainInterface.View.GroupSet.GroupMoreActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ac_group_more_tb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="群管理"
+                android:textSize="@dimen/text_size" />
+
+        </android.support.v7.widget.Toolbar>
 
 
         <RelativeLayout
@@ -68,6 +85,15 @@
             <!--android:text="变更群所有者"-->
             <!--android:textSize="@dimen/text_size" />-->
 
+        <TextView
+            android:id="@+id/ac_group_invite_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="邀请新成员"
+            android:visibility="gone"
+            android:textSize="@dimen/text_size" />
+
 
         <TextView
             android:id="@+id/ac_group_more_exit_tv"
@@ -75,6 +101,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="退出该群"
+            android:visibility="gone"
             android:textSize="@dimen/text_size" />
 
         <TextView
@@ -83,10 +110,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="解散该群"
+            android:visibility="gone"
             android:textSize="@dimen/text_size" />
 
         <TextView
-            android:id="@+id/ac_group_more_name_tv"
+            android:id="@+id/ac_group_more_modify_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

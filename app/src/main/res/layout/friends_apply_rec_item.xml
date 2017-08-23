@@ -16,13 +16,17 @@
 
         <Button
             android:id="@+id/friends_apply_agree"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/ripple_backgroud_bt"
             android:text="同意" />
 
         <Button
             android:id="@+id/friends_apply_refuse"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/ripple_backgroud_bt"
             android:layout_height="wrap_content"
             android:text="拒绝" />
 

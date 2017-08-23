@@ -2,12 +2,12 @@ package com.anriku.imcheck.MainInterface.View;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfaceAct;
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfacePre;
@@ -17,7 +17,7 @@ import com.anriku.imcheck.databinding.ActivityMainInterfaceBinding;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
-public class MainInterfaceActivity extends AppCompatActivity implements IMainInterfaceAct{
+public class MainInterfaceActivity extends AppCompatActivity implements IMainInterfaceAct {
 
     private IMainInterfacePre iMainInterfacePre;
     private ActivityMainInterfaceBinding binding;
@@ -25,33 +25,38 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main_interface);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_interface);
         iMainInterfacePre = new MainInterfacePresenter(this);
 
+        binding.acMainInterfaceTb.setTitle("");
         setSupportActionBar(binding.acMainInterfaceTb);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-        iMainInterfacePre.setFragments(getSupportFragmentManager(),binding);
+        iMainInterfacePre.setFragments(getSupportFragmentManager(), binding);
     }
-
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mian_interface_menu,menu);
+        getMenuInflater().inflate(R.menu.mian_interface_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.add_friend:{
-                startActivity(new Intent(this,SearchFriendActivity.class));
+        switch (item.getItemId()) {
+            case R.id.add_friend:
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
-            }
-            case R.id.add_group:{
-                startActivity(new Intent(this,SelectGroupActivity.class));
+            case R.id.add_group:
+                startActivity(new Intent(this, SelectGroupActivity.class));
                 break;
-            }
+            case android.R.id.home:
+                finish();
             default:
                 break;
         }
@@ -65,7 +70,7 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
 
             @Override
             public void onSuccess() {
-                Log.d("MainInterface","退出成功");
+                Log.d("MainInterface", "退出成功");
             }
 
             @Override

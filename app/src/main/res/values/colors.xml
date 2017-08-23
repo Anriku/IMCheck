@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="grey">#333333</color>
+    <!--change-->
+    <color name="start">#b6fbff</color>
+    <color name="end">#83a4d4</color>
+
 </resources>

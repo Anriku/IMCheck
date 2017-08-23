@@ -3,6 +3,7 @@ package com.anriku.imcheck.MainInterface.View;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import com.anriku.imcheck.MainInterface.Interface.IMessageAct;
 import com.anriku.imcheck.MainInterface.Interface.IMessagePre;
 import com.anriku.imcheck.MainInterface.Presenter.MessagePresenter;
+import com.anriku.imcheck.MainInterface.View.GroupSet.GroupMoreActivity;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.Utils.GetContentUtil;
 import com.anriku.imcheck.Utils.PermissionUtil;
@@ -32,6 +34,7 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
 
         initView();
 
+        iMessagePre.setChatObj(this,binding,obj,isGroup);
         iMessagePre.setMessageRecAdapter(this, binding);
         iMessagePre.chat(this, obj, binding, isGroup);
         iMessagePre.getHistory(this, obj, binding);
@@ -46,8 +49,14 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
         Intent intent = getIntent();
         obj = intent.getStringExtra("obj");
         isGroup = intent.getBooleanExtra("is_group", false);
-        binding.acMessageObjTv.setText(obj);
+
+        binding.acMessageTb.setTitle("");
         setSupportActionBar(binding.acMessageTb);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -89,9 +98,12 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
             case R.id.message_friend_menu_more:
                 break;
             case R.id.message_group_menu_more:
-                Intent intent = new Intent(MessageActivity.this,GroupMoreActivity.class);
-                intent.putExtra("id",obj);
+                Intent intent = new Intent(MessageActivity.this, GroupMoreActivity.class);
+                intent.putExtra("id", obj);
                 startActivity(intent);
+                break;
+            case android.R.id.home:
+                finish();
                 break;
             default:
                 break;

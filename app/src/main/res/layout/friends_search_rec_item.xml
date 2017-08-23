@@ -24,6 +24,7 @@
                 android:id="@+id/friends_search_rec_item_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/ripple_backgroud_bt"
                 android:text="添加" />
 
         </LinearLayout>
@@ -31,15 +32,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@mipmap/item_divider"/>
+            android:background="@mipmap/item_divider" />
 
         <EditText
             android:id="@+id/friends_search_rec_item_et"
             android:layout_width="match_parent"
-            android:textSize="@dimen/text_size"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
             android:hint="请填入你的添加备注"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
 
     </LinearLayout>
 
