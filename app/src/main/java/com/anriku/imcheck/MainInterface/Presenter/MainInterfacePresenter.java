@@ -10,6 +10,7 @@ import com.anriku.imcheck.MainInterface.Interface.IMainInterfaceAct;
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfacePre;
 import com.anriku.imcheck.MainInterface.View.ChatFragment;
 import com.anriku.imcheck.MainInterface.View.DynamicsFragment;
+import com.anriku.imcheck.MainInterface.View.FriendsAndBlackFragment;
 import com.anriku.imcheck.MainInterface.View.FriendsFragment;
 import com.anriku.imcheck.databinding.ActivityMainInterfaceBinding;
 import com.hyphenate.EMContactListener;
@@ -35,7 +36,7 @@ public class MainInterfacePresenter implements IMainInterfacePre {
         String[] titles = {"消息", "联系人", "动态"};
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ChatFragment());
-        fragments.add(new FriendsFragment());
+        fragments.add(new FriendsAndBlackFragment());
         fragments.add(new DynamicsFragment());
         IMCheckVPAdapter adapter = new IMCheckVPAdapter(fragmentManager, fragments, titles);
         binding.acMainInterfaceVp.setAdapter(adapter);

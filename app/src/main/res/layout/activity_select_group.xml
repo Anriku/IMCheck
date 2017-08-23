@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.anriku.imcheck.MainInterface.View.SelectGroupActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ac_select_group_tb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:id="@+id/ac_select_group_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="请选择要创建的群类型"
+                android:textSize="@dimen/text_size" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/ac_select_group_cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ac_select_group_tb"
+            app:cardCornerRadius="@dimen/radius">
+
+            <Spinner
+                android:id="@+id/ac_select_group_sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@mipmap/spinner"
+                android:gravity="center" />
+
+        </android.support.v7.widget.CardView>
+
+
+        <EditText
+            android:id="@+id/ac_select_group_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ac_select_group_cv"
+            android:hint="请输入群名"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/ac_select_group_max_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ac_select_group_name_et"
+            android:hint="请输入所建群的最大的人数"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/ac_select_group_desc_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ac_select_group_max_et"
+            android:hint="请输入本群的简介"
+            android:maxLines="2"
+            android:textSize="@dimen/text_size" />
+
+
+        <Button
+            android:id="@+id/ac_select_group_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ac_select_group_desc_et"
+            android:text="完成" />
+
+    </RelativeLayout>
+
+</layout>

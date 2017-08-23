@@ -2,6 +2,7 @@ package com.anriku.imcheck.Utils;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
@@ -19,13 +20,18 @@ import java.util.List;
 
 public class IMApplication extends Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        context = getApplicationContext();
         init();
     }
 
+    public static Context getContext() {
+        return context;
+    }
 
     private void init() {
         EMOptions options = new EMOptions();

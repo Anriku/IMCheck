@@ -13,6 +13,7 @@ import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.ChatRecItemBinding;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 
 import java.util.List;
 
@@ -32,25 +33,32 @@ public class ChatRecAdapter extends RecyclerView.Adapter<ChatRecAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (context == null){
+        if (context == null) {
             context = parent.getContext();
         }
         ChatRecItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chat_rec_item
-        ,parent,false);
+                , parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.binding.chatRecItemObj.setText(emConversations.get(position).getLastMessage().getFrom());
-        holder.binding.chatRecItemMsg.setText(emConversations.get(position).getLastMessage().getBody().toString().split("\"")[1]);
         holder.binding.chatRecItemTime.setText(String.valueOf(emConversations.get(position).getLastMessage().getMsgTime()));
+
+        if (emConversations.get(position).getLastMessage().getType() == EMMessage.Type.TXT) {
+            EMTextMessageBody messageBody = (EMTextMessageBody) emConversations.get(position).getLastMessage().getBody();
+            holder.binding.chatRecItemMsg.setText(messageBody.getMessage());
+        } else if (emConversations.get(position).getLastMessage().getType() == EMMessage.Type.VOICE) {
+            holder.binding.chatRecItemMsg.setText("[" + "语音" + "]");
+        }
+
         final int pos = position;
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("obj",emConversations.get(pos).getLastMessage().getUserName());
+                intent.putExtra("obj", emConversations.get(pos).getLastMessage().getUserName());
                 context.startActivity(intent);
             }
         });
@@ -63,6 +71,7 @@ public class ChatRecAdapter extends RecyclerView.Adapter<ChatRecAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ChatRecItemBinding binding;
+
         public ViewHolder(ChatRecItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

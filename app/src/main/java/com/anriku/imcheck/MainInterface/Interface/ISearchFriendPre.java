@@ -9,5 +9,5 @@ import com.anriku.imcheck.databinding.ActivitySearchFriendBinding;
  */
 
 public interface ISearchFriendPre {
-    void searchFriend(Context context,ActivitySearchFriendBinding binding);
+    void search(Context context, ActivitySearchFriendBinding binding);
 }

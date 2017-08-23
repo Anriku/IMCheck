@@ -6,11 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.anriku.imcheck.MainInterface.View.FriendsApplyActivity">
+        tools:context="com.anriku.imcheck.MainInterface.View.ApplyActivity">
 
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/ac_main_interface_tb"
+            android:id="@+id/ac_apply_tb"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"

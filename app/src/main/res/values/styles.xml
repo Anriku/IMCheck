@@ -13,6 +13,14 @@
         <item name="android:windowExitAnimation">@anim/window_back</item>
     </style>
 
+    <style name="Theme.ActivityDialogStyle" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!--TextSize-->
     <dimen name="text_size">20sp</dimen>
     <dimen name="text_size_small">15sp</dimen>
@@ -24,5 +32,10 @@
     <!--Radius-->
     <dimen name="radius">10dp</dimen>
     <dimen name="radius_small">5dp</dimen>
+
+    <!--PicSizeAndMargin-->
+    <dimen name="size_pic">40dp</dimen>
+    <dimen name="size_card">40dp</dimen>
+    <dimen name="pic_margin">15dp</dimen>
 
 </resources>

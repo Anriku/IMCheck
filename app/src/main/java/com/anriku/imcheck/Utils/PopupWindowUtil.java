@@ -25,8 +25,11 @@ public class PopupWindowUtil {
     private PopupWindow popupWindow;
     private float alpha = 1f;
     private LayoutInflater inflater;
-    private LinearLayout linearLayout;//用于返回后后面好调用布局文件的控件
+    private FrameLayout frameLayout;//用于返回后后面好调用布局文件的控件
     private static PopupWindowUtil popupWindowUtil;
+    public static final int BOTTOM = 0;
+    public static final int CENTER = 1;
+    private static int local;
 
     private Handler handler = new Handler() {
         @Override
@@ -47,23 +50,24 @@ public class PopupWindowUtil {
         this.animationStyle = animationStyle;
         this.inflater = inflater;
         this.window = window;
-        linearLayout = (LinearLayout) inflater.inflate(resource, null);
+        frameLayout = (FrameLayout) inflater.inflate(resource, null);
     }
 
     //使用单例模式防止不停按button不停建,开始一直不知道为什么会重建，怎了好久!!!555
-    public static synchronized PopupWindowUtil getInstance(int resource, int animationStyle, LayoutInflater inflater, Window window) {
-        if (popupWindowUtil == null) {
-            popupWindowUtil = new PopupWindowUtil(resource, animationStyle, inflater, window);
-        }
-        return popupWindowUtil;
+    public static synchronized PopupWindowUtil getInstance(int resource, int animationStyle, LayoutInflater inflater, Window window, int location) {
+        local = location;
+//        if (popupWindowUtil == null) {
+//            popupWindowUtil = new PopupWindowUtil(resource, animationStyle, inflater, window);
+//        }
+        return new PopupWindowUtil(resource, animationStyle, inflater, window);
     }
 
     public PopupWindow getPopupWindow() {
         return popupWindow;
     }
 
-    public LinearLayout getLinearLayout() {
-        return linearLayout;
+    public FrameLayout getFrameLayout() {
+        return frameLayout;
     }
 
     public void bottomWindow(View view) {
@@ -71,7 +75,7 @@ public class PopupWindowUtil {
             return;
         }
 
-        popupWindow = new PopupWindow(linearLayout, ViewGroup.LayoutParams.MATCH_PARENT,
+        popupWindow = new PopupWindow(frameLayout, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(false);
         popupWindow.setOutsideTouchable(true);
@@ -79,7 +83,11 @@ public class PopupWindowUtil {
         //特别重要,定位置
         int[] location = new int[2];
         view.getLocationOnScreen(location);
-        popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.BOTTOM, 0, -location[1]);
+        if (local == BOTTOM) {
+            popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.BOTTOM, 0, -location[1]);
+        } else {
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        }
         popupWindow.setOnDismissListener(new PopupDismissListener());
 
         //用于实现渐变效果

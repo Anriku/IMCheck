@@ -3,24 +3,22 @@ package com.anriku.imcheck.MainInterface.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.anriku.imcheck.Adapter.FriendsRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsFrg;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsPre;
-import com.anriku.imcheck.MainInterface.View.FriendsApplyActivity;
+import com.anriku.imcheck.MainInterface.Model.FriendApply;
+import com.anriku.imcheck.MainInterface.View.ApplyActivity;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FragmentFriendsBinding;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,13 +61,12 @@ public class FriendsPresenter implements IFriendsPre {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        FriendsRecAdapter adapter = new FriendsRecAdapter(context, strings);
+                        FriendsRecAdapter adapter = new FriendsRecAdapter(context, strings,FriendsRecAdapter.FRIEND);
                         LinearLayoutManager manager = new LinearLayoutManager(context);
                         binding.frgFriendsRv.setAdapter(adapter);
                         binding.frgFriendsRv.setLayoutManager(manager);
                     }
                 });
-
     }
 
 
@@ -80,12 +77,12 @@ public class FriendsPresenter implements IFriendsPre {
 
             @Override
             public void onContactAdded(String s) {
-
+                getFriends(context, binding);
             }
 
             @Override
             public void onContactDeleted(String s) {
-
+                getFriends(context, binding);
             }
 
             @Override
@@ -123,9 +120,10 @@ public class FriendsPresenter implements IFriendsPre {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, FriendsApplyActivity.class);
-                intent.putStringArrayListExtra("names", (ArrayList<String>) names);
-                intent.putStringArrayListExtra("reasons", (ArrayList<String>) reasons);
+                Intent intent = new Intent(context, ApplyActivity.class);
+                FriendApply friendApply = new FriendApply(names,reasons);
+                intent.putExtra("friend_apply",friendApply);
+                intent.putExtra("is_group",false);
                 context.startActivity(intent);
                 binding.frgFriendsTv.setBackgroundColor(Color.parseColor("#ffffff"));
             }
@@ -138,7 +136,7 @@ public class FriendsPresenter implements IFriendsPre {
         binding.frgFriendsSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getFriends(context,binding);
+                getFriends(context, binding);
                 binding.frgFriendsSrl.setRefreshing(false);
             }
         });

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -63,8 +64,18 @@
 
         <activity android:name=".LoginAndRegister.View.RegisterActivity" />
         <activity android:name=".MainInterface.View.SearchFriendActivity" />
-        <activity android:name=".MainInterface.View.FriendsApplyActivity" />
-        <activity android:name=".MainInterface.View.MessageActivity"></activity>
+        <activity android:name=".MainInterface.View.ApplyActivity" />
+        <activity android:name=".MainInterface.View.MessageActivity" />
+        <activity
+            android:name=".MainInterface.View.VideoActivity"
+            android:theme="@style/Theme.ActivityDialogStyle" />
+
+        <service android:name=".Utils.DownloadService" />
+
+        <activity android:name=".MainInterface.View.SelectGroupActivity" />
+        <activity android:name=".MainInterface.View.GroupMoreActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.AdminsSetActivity" />
+        <activity android:name=".MainInterface.View.GroupSet.InviteMembersActivity"></activity>
     </application>
 
 </manifest>

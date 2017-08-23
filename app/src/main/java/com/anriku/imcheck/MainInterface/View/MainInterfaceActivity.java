@@ -48,6 +48,12 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
                 startActivity(new Intent(this,SearchFriendActivity.class));
                 break;
             }
+            case R.id.add_group:{
+                startActivity(new Intent(this,SelectGroupActivity.class));
+                break;
+            }
+            default:
+                break;
         }
         return true;
     }

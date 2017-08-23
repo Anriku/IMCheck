@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.anriku.imcheck.MainInterface.Model.FriendApply;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FriendsApplyRecItemBinding;
 import com.hyphenate.chat.EMClient;
@@ -22,13 +23,11 @@ import java.util.List;
 public class FriendsApplyRecAdapter extends RecyclerView.Adapter<FriendsApplyRecAdapter.ViewHolder> {
 
     private Context context;
-    private List<String> names;
-    private List<String> reasons;
+    private FriendApply friendApply;
 
-    public FriendsApplyRecAdapter(Context context, List<String> names, List<String> reasons) {
+    public FriendsApplyRecAdapter(Context context, FriendApply friendApply) {
         this.context = context;
-        this.names = names;
-        this.reasons = reasons;
+        this.friendApply = friendApply;
     }
 
     @Override
@@ -41,13 +40,20 @@ public class FriendsApplyRecAdapter extends RecyclerView.Adapter<FriendsApplyRec
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.binding.friendsApplyTv.setText("好友申请:" + names.get(position) + "\n" + "申请备注:" + reasons.get(position));
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
+        holder.binding.friendsApplyTv.setText("好友申请:" + friendApply.getNames().get(position) + "\n" + "申请备注:" + friendApply.getReasons().get(position));
+
         holder.binding.friendsApplyAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    EMClient.getInstance().contactManager().acceptInvitation(names.get(position));
+                    EMClient.getInstance().contactManager().acceptInvitation(friendApply.getNames().get(position));
+                    friendApply.getNames().remove(position);
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "已同意", Toast.LENGTH_SHORT).show();
                 } catch (HyphenateException e) {
                     Toast.makeText(context, "同意好友失败", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -59,7 +65,11 @@ public class FriendsApplyRecAdapter extends RecyclerView.Adapter<FriendsApplyRec
             @Override
             public void onClick(View view) {
                 try {
-                    EMClient.getInstance().contactManager().declineInvitation(names.get(position));
+                    EMClient.getInstance().contactManager().declineInvitation(friendApply.getNames().get(position));
+                    friendApply.getNames().remove(position);
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "已拒绝", Toast.LENGTH_SHORT).show();
                 } catch (HyphenateException e) {
                     Toast.makeText(context, "拒绝好友失败", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -70,7 +80,7 @@ public class FriendsApplyRecAdapter extends RecyclerView.Adapter<FriendsApplyRec
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return friendApply.getNames().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

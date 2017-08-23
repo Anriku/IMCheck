@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/back_ground" android:drawable="@drawable/speak_normal"/>
+    <item android:id="@+id/progress">
+        <clip android:drawable="@drawable/speak_recording" android:gravity="bottom" android:clipOrientation="vertical"/>
+    </item>
+
+</layer-list>

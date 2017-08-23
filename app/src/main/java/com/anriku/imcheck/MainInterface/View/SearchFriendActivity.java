@@ -21,7 +21,9 @@ public class SearchFriendActivity extends AppCompatActivity implements ISearchFr
         binding = DataBindingUtil.setContentView(this,R.layout.activity_search_friend);
         iSearchFriendPre = new SearchFriendPresenter(this);
 
-        iSearchFriendPre.searchFriend(this,binding);
+        iSearchFriendPre.search(this,binding);
+
+
     }
 
 }

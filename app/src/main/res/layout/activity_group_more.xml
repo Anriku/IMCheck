@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.anriku.imcheck.MainInterface.View.GroupMoreActivity">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="@dimen/radius">
+
+                <ImageView
+                    android:id="@+id/ac_group_more_file_iv"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/msg_file" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="@dimen/radius">
+
+                <ImageView
+                    android:id="@+id/ac_group_more_notice_iv"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/notice" />
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/ac_group_more_admin_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="管理员设置"
+            android:textSize="@dimen/text_size" />
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/ac_group_more_owner_tv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:text="变更群所有者"-->
+            <!--android:textSize="@dimen/text_size" />-->
+
+
+        <TextView
+            android:id="@+id/ac_group_more_exit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="退出该群"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/ac_group_more_dissolve_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="解散该群"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/ac_group_more_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="修改群组的名称以及描述"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/ac_group_more_details_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="群组信息"
+            android:textSize="@dimen/text_size" />
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="屏蔽该群"-->
+        <!--android:textSize="@dimen/text_size" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/ac_group_more_shield_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="群组黑名单"-->
+        <!--android:textSize="@dimen/text_size" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/ac_group_more_ban_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="群成员禁言"-->
+        <!--android:textSize="@dimen/text_size" />-->
+
+    </LinearLayout>
+
+</layout>
