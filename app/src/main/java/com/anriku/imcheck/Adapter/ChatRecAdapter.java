@@ -58,7 +58,8 @@ public class ChatRecAdapter extends RecyclerView.Adapter<ChatRecAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("obj", emConversations.get(pos).getLastMessage().getUserName());
+                intent.putExtra("is_group",emConversations.get(pos).isGroup());
+                intent.putExtra("obj", emConversations.get(pos).conversationId());
                 context.startActivity(intent);
             }
         });

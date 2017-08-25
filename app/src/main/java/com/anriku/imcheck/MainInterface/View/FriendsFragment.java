@@ -43,12 +43,10 @@ public class FriendsFragment extends Fragment implements IFriendsFrg{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         iFriendsPre = new FriendsPresenter(this);
         iFriendsPre.getFriends(getContext(),binding);
         iFriendsPre.handleApply(getContext(),names,reasons,binding);
         iFriendsPre.refreshFriends(getContext(),binding);
     }
-
 
 }

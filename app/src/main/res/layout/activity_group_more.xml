@@ -72,85 +72,57 @@
             android:id="@+id/ac_group_more_admin_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="管理员设置"
             android:textSize="@dimen/text_size" />
 
 
-        <!--<TextView-->
-            <!--android:id="@+id/ac_group_more_owner_tv"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center"-->
-            <!--android:text="变更群所有者"-->
-            <!--android:textSize="@dimen/text_size" />-->
-
         <TextView
             android:id="@+id/ac_group_invite_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="邀请新成员"
-            android:visibility="gone"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
 
 
         <TextView
             android:id="@+id/ac_group_more_exit_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="退出该群"
-            android:visibility="gone"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/ac_group_more_dissolve_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="解散该群"
-            android:visibility="gone"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/ac_group_more_modify_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="修改群组的名称以及描述"
             android:textSize="@dimen/text_size" />
 
-        <TextView
-            android:id="@+id/ac_group_more_details_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="群组信息"
-            android:textSize="@dimen/text_size" />
-
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="屏蔽该群"-->
-        <!--android:textSize="@dimen/text_size" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/ac_group_more_shield_tv"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="群组黑名单"-->
-        <!--android:textSize="@dimen/text_size" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/ac_group_more_ban_tv"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="群成员禁言"-->
-        <!--android:textSize="@dimen/text_size" />-->
 
     </LinearLayout>
 

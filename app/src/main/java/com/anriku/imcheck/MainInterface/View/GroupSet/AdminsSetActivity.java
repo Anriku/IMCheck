@@ -12,6 +12,7 @@ import com.anriku.imcheck.MainInterface.Interface.GroupSet.IAdminsSetAct;
 import com.anriku.imcheck.MainInterface.Interface.GroupSet.IAdminsSetPre;
 import com.anriku.imcheck.MainInterface.Presenter.GroupSet.AdminsSetPresenter;
 import com.anriku.imcheck.R;
+import com.anriku.imcheck.Utils.ExitAndDissolveGroupCollector;
 import com.anriku.imcheck.databinding.ActivityAdminsSetBinding;
 
 public class AdminsSetActivity extends AppCompatActivity implements IAdminsSetAct {
@@ -27,6 +28,9 @@ public class AdminsSetActivity extends AppCompatActivity implements IAdminsSetAc
         iAdminsSetPre = new AdminsSetPresenter(this);
         Intent intent = getIntent();
         obj = intent.getStringExtra("id");
+
+        //用于解散和退出群
+        ExitAndDissolveGroupCollector.addActivity(this);
 
         binding.acAdminsSetTb.setTitle("");
         setSupportActionBar(binding.acAdminsSetTb);

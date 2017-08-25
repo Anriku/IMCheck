@@ -32,9 +32,17 @@ public class GroupFragment extends Fragment implements IGroupFrg{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        iGroupPre.getGroups(getContext(),binding);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iGroupPre = new GroupPresenter(this);
+
+        iGroupPre.reFreshGroups(getContext(),binding);
         iGroupPre.getGroups(getContext(),binding);
         iGroupPre.handleGroupApply(getContext(),binding);
     }

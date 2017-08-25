@@ -130,10 +130,17 @@ public class SearchPresenter implements ISearchPre {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        LinearLayoutManager manager = new LinearLayoutManager(context);
-                        FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context, strings, FriendsSearchRecAdapter.GROUP);
-                        binding.acSearchRv.setLayoutManager(manager);
-                        binding.acSearchRv.setAdapter(adapter);
+                        if (strings.size() != 0){
+                            binding.acSearchNotFindTv.setVisibility(View.GONE);
+                            binding.acSearchRv.setVisibility(View.VISIBLE);
+                            LinearLayoutManager manager = new LinearLayoutManager(context);
+                            FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context, strings, FriendsSearchRecAdapter.GROUP);
+                            binding.acSearchRv.setLayoutManager(manager);
+                            binding.acSearchRv.setAdapter(adapter);
+                        }else {
+                            binding.acSearchNotFindTv.setVisibility(View.VISIBLE);
+                            binding.acSearchRv.setVisibility(View.GONE);
+                        }
                     }
                 });
     }
@@ -189,10 +196,17 @@ public class SearchPresenter implements ISearchPre {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        LinearLayoutManager manager = new LinearLayoutManager(context);
-                        FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context, strings, FriendsSearchRecAdapter.FRIEND);
-                        binding.acSearchRv.setLayoutManager(manager);
-                        binding.acSearchRv.setAdapter(adapter);
+                        if (strings.size() != 0){
+                            binding.acSearchNotFindTv.setVisibility(View.GONE);
+                            binding.acSearchRv.setVisibility(View.VISIBLE);
+                            LinearLayoutManager manager = new LinearLayoutManager(context);
+                            FriendsSearchRecAdapter adapter = new FriendsSearchRecAdapter(context, strings, FriendsSearchRecAdapter.FRIEND);
+                            binding.acSearchRv.setLayoutManager(manager);
+                            binding.acSearchRv.setAdapter(adapter);
+                        }else {
+                            binding.acSearchNotFindTv.setVisibility(View.VISIBLE);
+                            binding.acSearchRv.setVisibility(View.GONE);
+                        }
                     }
                 });
 

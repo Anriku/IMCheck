@@ -12,22 +12,25 @@
             android:layout_height="80dp"
             android:gravity="center"
             android:text="群申请"
-            android:textSize="@dimen/text_size"
-            />
+            android:textSize="@dimen/text_size" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@mipmap/item_divider"/>
+            android:background="@mipmap/item_divider" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/frg_group_rv"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/frg_group_srl"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/margin"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/frg_group_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>

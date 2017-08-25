@@ -56,9 +56,6 @@ public class PopupWindowUtil {
     //使用单例模式防止不停按button不停建,开始一直不知道为什么会重建，怎了好久!!!555
     public static synchronized PopupWindowUtil getInstance(int resource, int animationStyle, LayoutInflater inflater, Window window, int location) {
         local = location;
-//        if (popupWindowUtil == null) {
-//            popupWindowUtil = new PopupWindowUtil(resource, animationStyle, inflater, window);
-//        }
         return new PopupWindowUtil(resource, animationStyle, inflater, window);
     }
 

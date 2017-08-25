@@ -7,14 +7,18 @@
         android:orientation="vertical">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/frg_black_rv"
-            android:layout_margin="@dimen/margin"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/frg_black_srl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/frg_black_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin" />
 
-        </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>

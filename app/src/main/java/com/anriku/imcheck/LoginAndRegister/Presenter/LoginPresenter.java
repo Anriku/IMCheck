@@ -1,22 +1,16 @@
 package com.anriku.imcheck.LoginAndRegister.Presenter;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anriku.imcheck.LoginAndRegister.Interface.ILoginAct;
 import com.anriku.imcheck.LoginAndRegister.Interface.ILoginPre;
-import com.anriku.imcheck.LoginAndRegister.View.LoginActivity;
 import com.anriku.imcheck.LoginAndRegister.View.RegisterActivity;
 import com.anriku.imcheck.MainInterface.View.MainInterfaceActivity;
 import com.anriku.imcheck.databinding.ActivityLoginBinding;
@@ -44,7 +38,20 @@ public class LoginPresenter implements ILoginPre {
 
 
     @Override
+    public void handleExceptionExit() {
+        EMClient.getInstance().logout(true);
+    }
+
+    @Override
     public void login(final Context context, final ActivityLoginBinding binding) {
+
+        SharedPreferences pref = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+        boolean isRemember = pref.getBoolean("is_remember", false);
+        if (isRemember) {
+            binding.acLoginAccountEt.setText(pref.getString("name", ""));
+            binding.acLoginPasswordEt.setText(pref.getString("password", ""));
+            binding.acLoginRememberCb.setChecked(true);
+        }
 
         binding.acLoginLoginBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,12 +76,19 @@ public class LoginPresenter implements ILoginPre {
                                     EMClient.getInstance().groupManager().loadAllGroups();
                                     EMClient.getInstance().chatManager().loadAllConversations();
                                     context.startActivity(new Intent(context, MainInterfaceActivity.class));
-                                    ((LoginActivity) context).finish();
+                                    //用于回收Activity
+                                    ((Activity) context).finish();
                                     //对登录账户进行记录
                                     SharedPreferences.Editor editor = context.getSharedPreferences("account", Context.MODE_PRIVATE).edit();
                                     editor.putString("name", binding.acLoginAccountEt.getText().toString());
-                                    editor.apply();
+                                    editor.putString("password", binding.acLoginPasswordEt.getText().toString());
 
+                                    if (binding.acLoginRememberCb.isChecked()) {
+                                        editor.putBoolean("is_remember", true);
+                                    } else {
+                                        editor.putBoolean("is_remember", false);
+                                    }
+                                    editor.apply();
                                     progressDialog.dismiss();
                                 }
 
@@ -111,7 +125,6 @@ public class LoginPresenter implements ILoginPre {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, RegisterActivity.class));
-                ((LoginActivity) context).finish();
             }
         });
     }

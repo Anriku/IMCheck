@@ -36,7 +36,7 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        iMainInterfacePre.setFragments(getSupportFragmentManager(), binding);
+        iMainInterfacePre.setFragments(this,getSupportFragmentManager(), binding);
     }
 
 
@@ -53,7 +53,7 @@ public class MainInterfaceActivity extends AppCompatActivity implements IMainInt
                 startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.add_group:
-                startActivity(new Intent(this, SelectGroupActivity.class));
+                startActivity(new Intent(this, CreateGroupActivity.class));
                 break;
             case android.R.id.home:
                 finish();

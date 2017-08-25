@@ -12,15 +12,12 @@ import com.anriku.imcheck.Adapter.IMCheckVPAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsAndBlackPre;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsAndBlackFrg;
 import com.anriku.imcheck.MainInterface.View.BlackFragment;
-import com.anriku.imcheck.MainInterface.View.ChatFragment;
-import com.anriku.imcheck.MainInterface.View.DynamicsFragment;
-import com.anriku.imcheck.MainInterface.View.FriendsAndBlackFragment;
+
 import com.anriku.imcheck.MainInterface.View.FriendsFragment;
 import com.anriku.imcheck.MainInterface.View.GroupFragment;
-import com.anriku.imcheck.MainInterface.View.SelectGroupActivity;
+
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FragmentFriendsAndBlackBinding;
-import com.anriku.imcheck.databinding.FragmentGroupBinding;
 
 import java.util.ArrayList;
 import java.util.List;

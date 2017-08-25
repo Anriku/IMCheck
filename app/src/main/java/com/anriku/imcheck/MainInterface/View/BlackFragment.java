@@ -34,6 +34,8 @@ public class BlackFragment extends Fragment implements IBlackFrg {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iBlackPre = new BlackPresenter(this);
+
+        iBlackPre.refreshBlackList(getContext(),binding);
         iBlackPre.getBlackList(getContext(),binding);
     }
 }

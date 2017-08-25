@@ -9,16 +9,16 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.IBinder;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.anriku.imcheck.MainInterface.View.VideoActivity;
+import com.anriku.imcheck.Utils.VideoActivity;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.Utils.DownloadService;
+import com.anriku.imcheck.Utils.ImageActivity;
 import com.anriku.imcheck.Utils.PermissionUtil;
 import com.anriku.imcheck.Utils.VoiceUtil;
 import com.anriku.imcheck.databinding.MessageRecItemBinding;
@@ -28,6 +28,7 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMVideoMessageBody;
+import com.hyphenate.chat.EMVoiceMessageBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
 
                 //对文字进行输出
                 EMTextMessageBody messageBody = (EMTextMessageBody) emMessages.get(position).getBody();
-                holder.binding.messageRecItemRightTv.setText(String.valueOf(messageBody.getMessage()));
+                holder.binding.messageRecItemRightTv.setText(messageBody.getMessage());
 
                 //防止重用点击事件
                 holder.binding.messageRecItemRightIv.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +122,9 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                         util.startPlay(emMessages.get(position), holder.binding.messageRecItemRightIv);
                     }
                 });
+                EMVoiceMessageBody messageBody = (EMVoiceMessageBody) emMessages.get(position).getBody();
+                //设置语音时间
+                holder.binding.messageRecItemRightMoreTv.setText(String.valueOf(messageBody.getLength()) + "\"");
 
                 //设置图片大小
                 ViewGroup.LayoutParams params = holder.binding.messageRecItemRightIv.getLayoutParams();
@@ -154,6 +158,9 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                 holder.binding.messageRecItemRightIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(context,ImageActivity.class);
+                        intent.putExtra("url",messageBody.getRemoteUrl());
+                        context.startActivity(intent);
                     }
                 });
 
@@ -175,9 +182,6 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                 holder.binding.messageRecItemRightIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context, VideoActivity.class);
-                        intent.putExtra("video", messageBody);
-                        context.startActivity(intent);
                     }
                 });
 
@@ -245,7 +249,7 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                 holder.binding.messageRecItemLeftTv.setVisibility(View.VISIBLE);
 
                 EMTextMessageBody messageBody = (EMTextMessageBody) emMessages.get(position).getBody();
-                holder.binding.messageRecItemLeftTv.setText(String.valueOf(messageBody.getMessage()));
+                holder.binding.messageRecItemLeftTv.setText(messageBody.getMessage());
 
                 holder.binding.messageRecItemLeftIv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -259,24 +263,30 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                 holder.binding.messageRecItemLeftMoreTv.setVisibility(View.VISIBLE);
                 holder.binding.messageRecItemLeftIv.setVisibility(View.VISIBLE);
 
+                //防止重用后,文字还在
                 holder.binding.messageRecItemLeftTv.setText("");
 
+                //进行语音播放
                 holder.binding.messageRecItemLeftTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (emMessages.get(position).getType() == EMMessage.Type.VOICE) {
-                            VoiceUtil util = new VoiceUtil();
-                            util.startPlay(emMessages.get(position), holder.binding.messageRecItemLeftIv);
-                        }
+                        VoiceUtil util = new VoiceUtil();
+                        util.startPlay(emMessages.get(position), holder.binding.messageRecItemLeftIv);
                     }
                 });
 
-                ViewGroup.LayoutParams params = holder.binding.messageRecItemRightIv.getLayoutParams();
+                EMVoiceMessageBody messageBody = (EMVoiceMessageBody) emMessages.get(position).getBody();
+                //设置语音时间
+                holder.binding.messageRecItemLeftMoreTv.setText(String.valueOf(messageBody.getLength()) + "\"");
+
+                //设置图片大小
+                ViewGroup.LayoutParams params = holder.binding.messageRecItemLeftIv.getLayoutParams();
                 params.width = 60;
                 params.height = 60;
-                holder.binding.messageRecItemRightIv.setLayoutParams(params);
-                holder.binding.messageRecItemRightIv.setImageResource(R.mipmap.voice_left);
+                holder.binding.messageRecItemLeftIv.setLayoutParams(params);
 
+                holder.binding.messageRecItemLeftIv.setImageResource(R.mipmap.voice_left);
+                //防止重用点击事件
                 holder.binding.messageRecItemLeftIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -300,6 +310,9 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                 holder.binding.messageRecItemLeftIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(context,ImageActivity.class);
+                        intent.putExtra("url",messageBody.getRemoteUrl());
+                        context.startActivity(intent);
                     }
                 });
 
@@ -345,6 +358,7 @@ public class MessageRecAdapter extends RecyclerView.Adapter<MessageRecAdapter.Vi
                         context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
                         PermissionUtil.requestPermissions(context, permissions, new PermissionUtil.PermissionsInterface() {
                             private boolean isDownload = false;
+
                             @Override
                             public void onDoSomething() {
                                 if (!isDownload) {

@@ -12,11 +12,13 @@ import com.anriku.imcheck.MainInterface.View.GroupSet.AdminsSetActivity;
 import com.anriku.imcheck.MainInterface.View.GroupSet.GroupModifyActivity;
 import com.anriku.imcheck.MainInterface.View.GroupSet.InviteMembersActivity;
 import com.anriku.imcheck.MainInterface.View.GroupSet.NoticeActivity;
-import com.anriku.imcheck.databinding.ActivityAdminsSetBinding;
+import com.anriku.imcheck.Utils.ExitAndDissolveGroupCollector;
 import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.exceptions.HyphenateException;
+import com.wilddog.client.SyncReference;
+import com.wilddog.client.WilddogSync;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class GroupMorePresenter implements IGroupMorePre {
     public GroupMorePresenter(IGroupMoreAct iGroupMoreAct) {
         this.iGroupMoreAct = iGroupMoreAct;
     }
+
 
     @Override
     public void inviteNewMember(final Context context, final ActivityGroupMoreBinding binding, final String obj) {
@@ -146,6 +149,10 @@ public class GroupMorePresenter implements IGroupMorePre {
                                         @Override
                                         public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                                             EMClient.getInstance().groupManager().destroyGroup(obj);
+                                            //从野狗中删除数据
+                                            SyncReference reference = WilddogSync.getInstance().getReference("groups");
+                                            reference.child(obj).removeValue();
+                                            ExitAndDissolveGroupCollector.finishAll();
                                             e.onNext("解散成功");
                                         }
                                     })
@@ -170,6 +177,7 @@ public class GroupMorePresenter implements IGroupMorePre {
                                         @Override
                                         public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                                             EMClient.getInstance().groupManager().leaveGroup(obj);
+                                            ExitAndDissolveGroupCollector.finishAll();
                                             e.onNext("退出成功");
                                         }
                                     })

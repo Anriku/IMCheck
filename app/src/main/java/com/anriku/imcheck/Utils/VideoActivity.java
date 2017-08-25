@@ -1,4 +1,4 @@
-package com.anriku.imcheck.MainInterface.View;
+package com.anriku.imcheck.Utils;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;

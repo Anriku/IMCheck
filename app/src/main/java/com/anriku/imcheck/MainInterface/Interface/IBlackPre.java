@@ -9,5 +9,6 @@ import com.anriku.imcheck.databinding.FragmentBlackBinding;
  */
 
 public interface IBlackPre {
+    void refreshBlackList(Context context,FragmentBlackBinding binding);
     void getBlackList(Context context,FragmentBlackBinding binding);
 }

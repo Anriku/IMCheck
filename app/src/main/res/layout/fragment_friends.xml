@@ -17,7 +17,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="3dp"
             android:background="@mipmap/item_divider" />
 
         <android.support.v4.widget.SwipeRefreshLayout

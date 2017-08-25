@@ -62,11 +62,14 @@ public class FriendsSearchRecAdapter extends RecyclerView.Adapter<FriendsSearchR
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
         holder.binding.friendsSearchRecItemTv.setText(names.get(position));
         if (type == FRIEND) {
             holder.binding.friendsSearchRecItemBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if (holder.binding.friendsSearchRecItemEt.getVisibility() == View.GONE) {
                         holder.binding.friendsSearchRecItemEt.setVisibility(View.VISIBLE);
                     } else {
@@ -78,6 +81,7 @@ public class FriendsSearchRecAdapter extends RecyclerView.Adapter<FriendsSearchR
                             e.printStackTrace();
                         }
                     }
+
                 }
             });
         } else if (type == GROUP) {

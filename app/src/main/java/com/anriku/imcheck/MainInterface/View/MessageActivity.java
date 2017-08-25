@@ -14,7 +14,9 @@ import com.anriku.imcheck.MainInterface.Interface.IMessageAct;
 import com.anriku.imcheck.MainInterface.Interface.IMessagePre;
 import com.anriku.imcheck.MainInterface.Presenter.MessagePresenter;
 import com.anriku.imcheck.MainInterface.View.GroupSet.GroupMoreActivity;
+import com.anriku.imcheck.MainInterface.View.UserSet.UserSetActivity;
 import com.anriku.imcheck.R;
+import com.anriku.imcheck.Utils.ExitAndDissolveGroupCollector;
 import com.anriku.imcheck.Utils.GetContentUtil;
 import com.anriku.imcheck.Utils.PermissionUtil;
 import com.anriku.imcheck.databinding.ActivityMessageBinding;
@@ -34,9 +36,9 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
 
         initView();
 
-        iMessagePre.setChatObj(this,binding,obj,isGroup);
+        iMessagePre.setChatObj(this, binding, obj, isGroup);
         iMessagePre.setMessageRecAdapter(this, binding);
-        iMessagePre.chat(this, obj, binding, isGroup);
+        iMessagePre.chat(this, obj, binding, getSupportFragmentManager(), isGroup);
         iMessagePre.getHistory(this, obj, binding);
         iMessagePre.setMore(binding);
         iMessagePre.setSpeak(this, getWindow(), obj, binding, isGroup);
@@ -57,6 +59,8 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
             actionBar.setHomeAsUpIndicator(R.mipmap.back);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        //用于解散或退出群
+        ExitAndDissolveGroupCollector.addActivity(this);
     }
 
     @Override
@@ -96,6 +100,7 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.message_friend_menu_more:
+                startActivity(new Intent(this, UserSetActivity.class));
                 break;
             case R.id.message_group_menu_more:
                 Intent intent = new Intent(MessageActivity.this, GroupMoreActivity.class);

@@ -4,11 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.anriku.imcheck.LoginAndRegister.Interface.IRegisterAct;
 import com.anriku.imcheck.LoginAndRegister.Interface.IRegisterPre;

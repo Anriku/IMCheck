@@ -11,6 +11,9 @@ import com.anriku.imcheck.databinding.ActivityLoginBinding;
  */
 
 public interface ILoginPre {
+    void handleExceptionExit();
+
     void login(Context context, ActivityLoginBinding binding);
-    void register(Context context,ActivityLoginBinding binding);
+
+    void register(Context context, ActivityLoginBinding binding);
 }

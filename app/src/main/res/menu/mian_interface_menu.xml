@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_friend"
-        android:icon="@mipmap/add_friend"
-        android:title="添加"
+        android:icon="@mipmap/search"
+        android:title="search"
         app:showAsAction="always" />
 
     <item
@@ -12,4 +12,5 @@
         android:icon="@mipmap/add_group"
         android:title="add_group"
         app:showAsAction="always" />
+
 </menu>

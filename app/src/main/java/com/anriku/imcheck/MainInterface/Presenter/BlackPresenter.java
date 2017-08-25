@@ -1,12 +1,14 @@
 package com.anriku.imcheck.MainInterface.Presenter;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
 import com.anriku.imcheck.Adapter.FriendsRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IBlackFrg;
 import com.anriku.imcheck.MainInterface.Interface.IBlackPre;
+import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FragmentBlackBinding;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -31,6 +33,18 @@ public class BlackPresenter implements IBlackPre {
 
     public BlackPresenter(IBlackFrg iBlackFrg) {
         this.iBlackFrg = iBlackFrg;
+    }
+
+    @Override
+    public void refreshBlackList(final Context context, final FragmentBlackBinding binding) {
+        binding.frgBlackSrl.setColorSchemeResources(R.color.colorAccent);
+        binding.frgBlackSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getBlackList(context,binding);
+                binding.frgBlackSrl.setRefreshing(false);
+            }
+        });
     }
 
     @Override

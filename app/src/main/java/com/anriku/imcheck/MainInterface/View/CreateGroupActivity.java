@@ -6,32 +6,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.anriku.imcheck.MainInterface.Interface.ISelectGroupAct;
-import com.anriku.imcheck.MainInterface.Interface.ISelectGroupPre;
-import com.anriku.imcheck.MainInterface.Presenter.SelectGroupPresenter;
+import com.anriku.imcheck.MainInterface.Interface.ICreateGroupAct;
+import com.anriku.imcheck.MainInterface.Interface.ICreateGroupPre;
+import com.anriku.imcheck.MainInterface.Presenter.CreateGroupPresenter;
 import com.anriku.imcheck.R;
-import com.anriku.imcheck.databinding.ActivitySelectGroupBinding;
+import com.anriku.imcheck.databinding.ActivityCreateGroupBinding;
 
-public class SelectGroupActivity extends AppCompatActivity implements ISelectGroupAct{
 
-    private ActivitySelectGroupBinding binding;
-    private ISelectGroupPre iSelectGroupPre;
+public class CreateGroupActivity extends AppCompatActivity implements ICreateGroupAct {
+
+    private ActivityCreateGroupBinding binding;
+    private ICreateGroupPre iCreateGroupPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_select_group);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_create_group);
 
-        binding.acSelectGroupTb.setTitle("");
-        setSupportActionBar(binding.acSelectGroupTb);
+        binding.acCreateGroupTb.setTitle("");
+        setSupportActionBar(binding.acCreateGroupTb);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setHomeAsUpIndicator(R.mipmap.back);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        iSelectGroupPre = new SelectGroupPresenter(this);
-        iSelectGroupPre.createGroup(this,binding);
+        iCreateGroupPre = new CreateGroupPresenter(this);
+        iCreateGroupPre.createGroup(this,binding);
     }
 
     @Override

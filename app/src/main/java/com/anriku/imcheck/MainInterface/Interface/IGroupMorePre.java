@@ -11,6 +11,7 @@ import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 
 public interface IGroupMorePre {
 
+
     void inviteNewMember(Context context, ActivityGroupMoreBinding binding, String obj);
 
     void adminsSet(Context context, ActivityGroupMoreBinding binding, String obj);

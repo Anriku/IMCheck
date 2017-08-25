@@ -11,6 +11,7 @@ import com.anriku.imcheck.MainInterface.Interface.IGroupMoreAct;
 import com.anriku.imcheck.MainInterface.Interface.IGroupMorePre;
 import com.anriku.imcheck.MainInterface.Presenter.GroupSet.GroupMorePresenter;
 import com.anriku.imcheck.R;
+import com.anriku.imcheck.Utils.ExitAndDissolveGroupCollector;
 import com.anriku.imcheck.databinding.ActivityGroupMoreBinding;
 import com.hyphenate.chat.EMClient;
 
@@ -26,6 +27,9 @@ public class GroupMoreActivity extends AppCompatActivity implements IGroupMoreAc
         iGroupMorePre = new GroupMorePresenter(this);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_group_more);
 
+        //用于解散和退出群
+        ExitAndDissolveGroupCollector.addActivity(this);
+
         binding.acGroupMoreTb.setTitle("");
         setSupportActionBar(binding.acGroupMoreTb);
         ActionBar actionBar = getSupportActionBar();
@@ -36,7 +40,6 @@ public class GroupMoreActivity extends AppCompatActivity implements IGroupMoreAc
 
         Intent intent = getIntent();
         obj = intent.getStringExtra("id");
-
         iGroupMorePre.adminsSet(this,binding,obj);
         iGroupMorePre.exitOrDissolveGroup(this,binding,obj);
         iGroupMorePre.modifyGroup(this,binding,obj);

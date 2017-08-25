@@ -1,6 +1,7 @@
 package com.anriku.imcheck.MainInterface.Interface;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Window;
 
@@ -18,7 +19,7 @@ public interface IMessagePre {
 
     void setMessageRecAdapter(Context context, ActivityMessageBinding binding);
 
-    void chat(Context context, String obj, ActivityMessageBinding binding, boolean isGroup);
+    void chat(Context context, String obj, ActivityMessageBinding binding, FragmentManager fragmentManager, boolean isGroup);
 
     void getHistory(Context context, String obj, ActivityMessageBinding binding);
 

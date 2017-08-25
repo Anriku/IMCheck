@@ -3,10 +3,12 @@ package com.anriku.imcheck.MainInterface.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.anriku.imcheck.Adapter.FriendsRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IFriendsFrg;
@@ -19,6 +21,7 @@ import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class FriendsPresenter implements IFriendsPre {
     public FriendsPresenter(IFriendsFrg iFriendsFrg) {
         this.iFriendsFrg = iFriendsFrg;
     }
+
 
     @Override
     public void getFriends(final Context context, final FragmentFriendsBinding binding) {

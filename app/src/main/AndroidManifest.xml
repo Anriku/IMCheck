@@ -67,19 +67,21 @@
         <activity android:name=".MainInterface.View.ApplyActivity" />
         <activity android:name=".MainInterface.View.MessageActivity" />
         <activity
-            android:name=".MainInterface.View.VideoActivity"
+            android:name=".Utils.VideoActivity"
             android:theme="@style/Theme.ActivityDialogStyle" />
 
         <service android:name=".Utils.DownloadService" />
 
-        <activity android:name=".MainInterface.View.SelectGroupActivity" />
+        <activity android:name=".MainInterface.View.CreateGroupActivity" />
         <activity android:name=".MainInterface.View.GroupSet.GroupMoreActivity" />
         <activity android:name=".MainInterface.View.GroupSet.AdminsSetActivity" />
         <activity android:name=".MainInterface.View.GroupSet.InviteMembersActivity" />
         <activity android:name=".MainInterface.View.GroupSet.GroupModifyActivity" />
         <activity android:name=".MainInterface.View.GroupSet.NoticeActivity" />
         <activity android:name=".MainInterface.View.GroupSet.NoticeModifyActivity" />
-        <activity android:name=".MainInterface.View.GroupSet.FileActivity"></activity>
+        <activity android:name=".MainInterface.View.GroupSet.FileActivity" />
+        <activity android:name=".Utils.ImageActivity" />
+        <activity android:name=".MainInterface.View.UserSet.UserSetActivity"></activity>
     </application>
 
 </manifest>

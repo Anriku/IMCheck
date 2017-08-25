@@ -1,20 +1,17 @@
 package com.anriku.imcheck.MainInterface.Presenter;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.anriku.imcheck.Adapter.IMCheckVPAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfaceAct;
 import com.anriku.imcheck.MainInterface.Interface.IMainInterfacePre;
 import com.anriku.imcheck.MainInterface.View.ChatFragment;
-import com.anriku.imcheck.MainInterface.View.DynamicsFragment;
 import com.anriku.imcheck.MainInterface.View.FriendsAndBlackFragment;
-import com.anriku.imcheck.MainInterface.View.FriendsFragment;
+import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.ActivityMainInterfaceBinding;
-import com.hyphenate.EMContactListener;
-import com.hyphenate.chat.EMClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +28,49 @@ public class MainInterfacePresenter implements IMainInterfacePre {
         this.iMainInterfaceAct = iMainInterfaceAct;
     }
 
+
     @Override
-    public void setFragments(FragmentManager fragmentManager, ActivityMainInterfaceBinding binding) {
-        String[] titles = {"消息", "联系人", "动态"};
-        List<Fragment> fragments = new ArrayList<>();
+    public void setFragments(final Context context, final FragmentManager fragmentManager, final ActivityMainInterfaceBinding binding) {
+        String[] titles = {"消息", "联系人"};
+        int[] images = {R.drawable.chat, R.drawable.friends};
+        final List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ChatFragment());
         fragments.add(new FriendsAndBlackFragment());
-        fragments.add(new DynamicsFragment());
-        IMCheckVPAdapter adapter = new IMCheckVPAdapter(fragmentManager, fragments, titles);
-        binding.acMainInterfaceVp.setAdapter(adapter);
-        for (String title : titles) {
-            binding.acMainInterfaceTl.addTab(binding.acMainInterfaceTl.newTab().setText(title));
+
+        //设置图标文字
+        for (int i = 0; i < titles.length; i++) {
+            binding.acMainInterfaceTl.addTab(binding.acMainInterfaceTl.newTab().setText(titles[i]).setIcon(images[i]));
         }
-        binding.acMainInterfaceTl.setupWithViewPager(binding.acMainInterfaceVp);
+
+        replaceFragment(fragments.get(0), fragmentManager);
+
+        binding.acMainInterfaceTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                replaceFragment(fragments.get(tab.getPosition()),fragmentManager);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
+
+    @Override
+    public void setNickName(Context context, ActivityMainInterfaceBinding binding) {
+
+    }
+
+    private void replaceFragment(Fragment fragment, FragmentManager manager) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.ac_main_interface_fl, fragment);
+        transaction.commit();
+    }
+
 }

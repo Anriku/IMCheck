@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainInterface.View.MainInterfaceActivity">
+        tools:context="com.anriku.imcheck.MainInterface.View.UserSet.UserSetActivity">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/ac_main_interface_tb"
+            android:id="@+id/ac_file_tb"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -18,26 +18,23 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <TextView
-                android:id="@+id/ac_main_interface_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="小信"
+                android:text="用户设置"
                 android:textSize="@dimen/text_size" />
 
         </android.support.v7.widget.Toolbar>
 
-        <FrameLayout
-            android:id="@+id/ac_main_interface_fl"
+        <TextView
+            android:id="@+id/ac_user_set_nickName_tv"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-           />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/ac_main_interface_tl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom" />
+            android:layout_height="wrap_content"
+            android:text="修改昵称"
+            android:background="?android:selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/margin"
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
 

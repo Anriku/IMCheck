@@ -3,6 +3,7 @@ package com.anriku.imcheck.MainInterface.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
@@ -12,7 +13,6 @@ import com.anriku.imcheck.MainInterface.Interface.IGroupFrg;
 import com.anriku.imcheck.MainInterface.Interface.IGroupPre;
 import com.anriku.imcheck.MainInterface.Model.GroupApply;
 import com.anriku.imcheck.MainInterface.View.ApplyActivity;
-import com.anriku.imcheck.MainInterface.View.SelectGroupActivity;
 import com.anriku.imcheck.R;
 import com.anriku.imcheck.databinding.FragmentGroupBinding;
 import com.hyphenate.EMGroupChangeListener;
@@ -198,5 +198,18 @@ public class GroupPresenter implements IGroupPre {
                 context.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void reFreshGroups(final Context context, final FragmentGroupBinding binding) {
+        binding.frgGroupSrl.setColorSchemeResources(R.color.colorAccent);
+        binding.frgGroupSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getGroups(context,binding);
+                binding.frgGroupSrl.setRefreshing(false);
+            }
+        });
+
     }
 }

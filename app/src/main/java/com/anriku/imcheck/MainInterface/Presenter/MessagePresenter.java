@@ -2,7 +2,9 @@ package com.anriku.imcheck.MainInterface.Presenter;
 
 import android.Manifest;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -30,7 +32,6 @@ import com.anriku.imcheck.Utils.GetContentUtil;
 import com.anriku.imcheck.Utils.GetVideoDataUtil;
 import com.anriku.imcheck.Utils.PermissionUtil;
 import com.anriku.imcheck.Utils.PopupWindowUtil;
-import com.anriku.imcheck.databinding.ActivityLoginBinding;
 import com.anriku.imcheck.databinding.ActivityMessageBinding;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -65,13 +66,17 @@ public class MessagePresenter implements IMessagePre {
     }
 
     @Override
-    public void setChatObj(Context chatObj, final ActivityMessageBinding binding, final String obj, boolean isGroup) {
-        if (isGroup){
+    public void setChatObj(final Context context, final ActivityMessageBinding binding, final String obj, boolean isGroup) {
+        if (isGroup) {
             Observable.create(new ObservableOnSubscribe<EMGroup>() {
                 @Override
                 public void subscribe(@NonNull ObservableEmitter<EMGroup> e) throws Exception {
-                    EMGroup emGroup = EMClient.getInstance().groupManager().getGroup(obj);
-                    e.onNext(emGroup);
+                    try {
+                        EMGroup emGroup = EMClient.getInstance().groupManager().getGroupFromServer(obj);
+                        e.onNext(emGroup);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             })
                     .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +87,7 @@ public class MessagePresenter implements IMessagePre {
                             binding.acMessageObjTv.setText(emGroup.getGroupName());
                         }
                     });
-        }else {
+        } else {
             binding.acMessageObjTv.setText(obj);
         }
     }
@@ -97,14 +102,13 @@ public class MessagePresenter implements IMessagePre {
     }
 
     @Override
-    public void chat(final Context context, final String obj, final ActivityMessageBinding binding, final boolean isGroup) {
+    public void chat(final Context context, final String obj, final ActivityMessageBinding binding, final FragmentManager fragmentManager, final boolean isGroup) {
         binding.acMessageEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //如果功能菜单打开进行关闭
                 if (binding.acMessageFirstLl.getVisibility() == View.VISIBLE) {
                     binding.acMessageFirstLl.setVisibility(View.GONE);
-                    binding.acMessageSecondLl.setVisibility(View.GONE);
                     binding.acMessageMoreIv.setImageResource(R.mipmap.add);
                 }
             }
@@ -127,6 +131,7 @@ public class MessagePresenter implements IMessagePre {
             }
         });
 
+
         binding.acMessageBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,7 +142,7 @@ public class MessagePresenter implements IMessagePre {
                 binding.acMessageRv.scrollToPosition(emMessages.size() - 1);
 
                 //进行群聊的判断
-                if (isGroup){
+                if (isGroup) {
                     message.setChatType(EMMessage.ChatType.GroupChat);
                 }
 
@@ -212,11 +217,9 @@ public class MessagePresenter implements IMessagePre {
             public void onClick(View view) {
                 if (binding.acMessageFirstLl.getVisibility() == View.GONE) {
                     binding.acMessageFirstLl.setVisibility(View.VISIBLE);
-                    binding.acMessageSecondLl.setVisibility(View.VISIBLE);
                     binding.acMessageMoreIv.setImageResource(R.mipmap.functions_back);
                 } else {
                     binding.acMessageFirstLl.setVisibility(View.GONE);
-                    binding.acMessageSecondLl.setVisibility(View.GONE);
                     binding.acMessageMoreIv.setImageResource(R.mipmap.add);
                 }
             }
@@ -281,7 +284,7 @@ public class MessagePresenter implements IMessagePre {
                                             emMessages.add(message);
                                             messageRecAdapter.notifyDataSetChanged();
 
-                                            if (isGroup){
+                                            if (isGroup) {
                                                 message.setChatType(EMMessage.ChatType.GroupChat);
                                             }
 
@@ -357,7 +360,7 @@ public class MessagePresenter implements IMessagePre {
                 emMessages.add(emMessage);
                 messageRecAdapter.notifyDataSetChanged();
 
-                if (isGroup){
+                if (isGroup) {
                     emMessage.setChatType(EMMessage.ChatType.GroupChat);
                 }
 
@@ -374,7 +377,7 @@ public class MessagePresenter implements IMessagePre {
                 emMessages.add(emMessage);
                 messageRecAdapter.notifyDataSetChanged();
 
-                if(isGroup){
+                if (isGroup) {
                     emMessage.setChatType(EMMessage.ChatType.GroupChat);
                 }
 
@@ -433,10 +436,10 @@ public class MessagePresenter implements IMessagePre {
     }
 
     @Override
-    public void sendFile(Context context, String filePath, ActivityMessageBinding binding, String obj,boolean isGroup) {
+    public void sendFile(Context context, String filePath, ActivityMessageBinding binding, String obj, boolean isGroup) {
         EMMessage message = EMMessage.createFileSendMessage(filePath, obj);
 
-        if (isGroup){
+        if (isGroup) {
             message.setChatType(EMMessage.ChatType.GroupChat);
         }
 

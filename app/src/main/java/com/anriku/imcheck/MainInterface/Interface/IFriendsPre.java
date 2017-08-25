@@ -1,6 +1,7 @@
 package com.anriku.imcheck.MainInterface.Interface;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 
 import com.anriku.imcheck.databinding.FragmentFriendsBinding;

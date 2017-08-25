@@ -11,4 +11,5 @@ import com.anriku.imcheck.databinding.FragmentGroupBinding;
 public interface IGroupPre {
     void getGroups(Context context, FragmentGroupBinding binding);
     void handleGroupApply(Context context,FragmentGroupBinding binding);
+    void reFreshGroups(Context context,FragmentGroupBinding binding);
 }
