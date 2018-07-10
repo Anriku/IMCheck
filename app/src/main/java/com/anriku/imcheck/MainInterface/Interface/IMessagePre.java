@@ -17,7 +17,7 @@ public interface IMessagePre {
 
     void setChatObj(Context chatObj,ActivityMessageBinding binding,String obj,boolean isGroup);
 
-    void setMessageRecAdapter(Context context, ActivityMessageBinding binding);
+    void setMessagesRecAdapter(Context context, ActivityMessageBinding binding);
 
     void chat(Context context, String obj, ActivityMessageBinding binding, FragmentManager fragmentManager, boolean isGroup);
 

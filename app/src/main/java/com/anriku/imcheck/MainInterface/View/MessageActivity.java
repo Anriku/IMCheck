@@ -37,7 +37,7 @@ public class MessageActivity extends AppCompatActivity implements IMessageAct {
         initView();
 
         iMessagePre.setChatObj(this, binding, obj, isGroup);
-        iMessagePre.setMessageRecAdapter(this, binding);
+        iMessagePre.setMessagesRecAdapter(this, binding);
         iMessagePre.chat(this, obj, binding, getSupportFragmentManager(), isGroup);
         iMessagePre.getHistory(this, obj, binding);
         iMessagePre.setMore(binding);

@@ -32,10 +32,10 @@ public class VideoRecAdapter extends RecyclerView.Adapter<VideoRecAdapter.ViewHo
     private PopupWindowUtil popupWindowUtil;
     //用于更新消息
     private List<EMMessage> emMessages;
-    private MessageRecAdapter adapter;
+    private MessagesRecAdapter adapter;
 
     public VideoRecAdapter(Context context, String obj, List<VideoModel> videoModels, PopupWindowUtil popupWindowUtil
-    ,List<EMMessage> emMessages,MessageRecAdapter adapter) {
+    ,List<EMMessage> emMessages,MessagesRecAdapter adapter) {
         this.context = context;
         this.obj = obj;
         this.videoModels = videoModels;

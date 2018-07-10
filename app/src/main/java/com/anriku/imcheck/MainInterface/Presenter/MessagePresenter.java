@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -21,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anriku.imcheck.Adapter.MessageRecAdapter;
+import com.anriku.imcheck.Adapter.MessagesRecAdapter;
 import com.anriku.imcheck.Adapter.VideoRecAdapter;
 import com.anriku.imcheck.MainInterface.Interface.IMessageAct;
 import com.anriku.imcheck.MainInterface.Interface.IMessagePre;
@@ -58,7 +57,7 @@ public class MessagePresenter implements IMessagePre {
 
     private IMessageAct iMessageAct;
     private List<EMMessage> emMessages;
-    private MessageRecAdapter messageRecAdapter;
+    private MessagesRecAdapter MessagesRecAdapter;
     private boolean isFromDB = false;
 
     public MessagePresenter(IMessageAct iMessageAct) {
@@ -93,12 +92,12 @@ public class MessagePresenter implements IMessagePre {
     }
 
     @Override
-    public void setMessageRecAdapter(Context context, ActivityMessageBinding binding) {
+    public void setMessagesRecAdapter(Context context, ActivityMessageBinding binding) {
         LinearLayoutManager manager = new LinearLayoutManager(context);
         emMessages = new ArrayList<>();
         binding.acMessageRv.setLayoutManager(manager);
-        messageRecAdapter = new MessageRecAdapter(context, emMessages);
-        binding.acMessageRv.setAdapter(messageRecAdapter);
+        MessagesRecAdapter = new MessagesRecAdapter(context, emMessages);
+        binding.acMessageRv.setAdapter(MessagesRecAdapter);
     }
 
     @Override
@@ -138,7 +137,7 @@ public class MessagePresenter implements IMessagePre {
                 EMMessage message = EMMessage.createTxtSendMessage(binding.acMessageEt.getText().toString(), obj);
                 emMessages.add(message);
                 //输入信息后进行跳转
-                messageRecAdapter.notifyDataSetChanged();
+                MessagesRecAdapter.notifyDataSetChanged();
                 binding.acMessageRv.scrollToPosition(emMessages.size() - 1);
 
                 //进行群聊的判断
@@ -193,7 +192,7 @@ public class MessagePresenter implements IMessagePre {
                     @Override
                     public void accept(List<EMMessage> list) throws Exception {
                         emMessages.addAll(list);
-                        messageRecAdapter.notifyDataSetChanged();
+                        MessagesRecAdapter.notifyDataSetChanged();
                         binding.acMessageRv.scrollToPosition(emMessages.size() - 1);
                     }
                 });
@@ -282,7 +281,7 @@ public class MessagePresenter implements IMessagePre {
                                             binding.acMessagePressSpeakBt.setText("按住说话");
                                             EMMessage message = EMMessage.createVoiceSendMessage(utils.getFilePath(), utils.getLength(), obj);
                                             emMessages.add(message);
-                                            messageRecAdapter.notifyDataSetChanged();
+                                            MessagesRecAdapter.notifyDataSetChanged();
 
                                             if (isGroup) {
                                                 message.setChatType(EMMessage.ChatType.GroupChat);
@@ -358,7 +357,7 @@ public class MessagePresenter implements IMessagePre {
             public void onClick(View view) {
                 EMMessage emMessage = EMMessage.createImageSendMessage(imagePath, false, obj);
                 emMessages.add(emMessage);
-                messageRecAdapter.notifyDataSetChanged();
+                MessagesRecAdapter.notifyDataSetChanged();
 
                 if (isGroup) {
                     emMessage.setChatType(EMMessage.ChatType.GroupChat);
@@ -375,7 +374,7 @@ public class MessagePresenter implements IMessagePre {
             public void onClick(View view) {
                 EMMessage emMessage = EMMessage.createImageSendMessage(imagePath, true, obj);
                 emMessages.add(emMessage);
-                messageRecAdapter.notifyDataSetChanged();
+                MessagesRecAdapter.notifyDataSetChanged();
 
                 if (isGroup) {
                     emMessage.setChatType(EMMessage.ChatType.GroupChat);
@@ -401,7 +400,7 @@ public class MessagePresenter implements IMessagePre {
                 RecyclerView rec = videoPop.getFrameLayout().findViewById(R.id.video_popup_window_rv);
                 videoPop.bottomWindow(view);
                 LinearLayoutManager manager = new LinearLayoutManager(context);
-                VideoRecAdapter adapter = new VideoRecAdapter(context, obj, videoModels, videoPop, emMessages, messageRecAdapter);
+                VideoRecAdapter adapter = new VideoRecAdapter(context, obj, videoModels, videoPop, emMessages, MessagesRecAdapter);
                 rec.setLayoutManager(manager);
                 rec.setAdapter(adapter);
             }
@@ -445,7 +444,7 @@ public class MessagePresenter implements IMessagePre {
 
         EMClient.getInstance().chatManager().sendMessage(message);
         emMessages.add(message);
-        messageRecAdapter.notifyDataSetChanged();
+        MessagesRecAdapter.notifyDataSetChanged();
         binding.acMessageRv.scrollToPosition(emMessages.size() - 1);
     }
 
@@ -463,7 +462,7 @@ public class MessagePresenter implements IMessagePre {
             }
             emMessages.addAll(0, messages);
             Log.e("requestMoreNews: ", String.valueOf(messages.size()));
-            messageRecAdapter.notifyDataSetChanged();
+            MessagesRecAdapter.notifyDataSetChanged();
         }
         binding.acMessageSrl.setRefreshing(false);
     }
