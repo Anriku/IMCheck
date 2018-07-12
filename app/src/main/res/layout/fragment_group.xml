@@ -6,17 +6,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@mipmap/item_divider" />
+
         <TextView
             android:id="@+id/frg_group_apply_tv"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="群申请"
             android:textSize="@dimen/text_size" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="@mipmap/item_divider" />
 
         <android.support.v4.widget.SwipeRefreshLayout

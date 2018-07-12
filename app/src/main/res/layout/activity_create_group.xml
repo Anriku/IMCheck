@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.anriku.imcheck.MainInterface.View.CreateGroupActivity">
 
         <android.support.v7.widget.Toolbar
@@ -26,32 +27,22 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/ac_create_group_cv"
+
+        <Spinner
+            android:id="@+id/ac_create_group_sp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-
             android:layout_margin="@dimen/margin"
-            android:layout_below="@id/ac_create_group_tb"
-            app:cardCornerRadius="25dp">
-
-            <Spinner
-                android:id="@+id/ac_create_group_sp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@mipmap/spinner"
-                android:gravity="center" />
-
-        </android.support.v7.widget.CardView>
+            android:background="@null"
+            android:gravity="center" />
 
 
         <EditText
             android:id="@+id/ac_select_group_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ac_create_group_cv"
-            android:hint="请输入群名"
             android:layout_margin="@dimen/margin"
+            android:hint="请输入群名"
             android:maxLines="1"
             android:textSize="@dimen/text_size" />
 
@@ -60,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:layout_below="@id/ac_select_group_name_et"
             android:hint="请输入所建群的最大的人数"
             android:maxLines="1"
             android:textSize="@dimen/text_size" />
@@ -70,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:layout_below="@id/ac_create_group_max_et"
             android:hint="请输入本群的简介"
             android:maxLines="2"
             android:textSize="@dimen/text_size" />
@@ -82,9 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:background="@drawable/ripple_backgroud_bt"
-            android:layout_below="@id/ac_create_group_desc_et"
             android:text="完成" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

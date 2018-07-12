@@ -30,13 +30,13 @@
         <FrameLayout
             android:id="@+id/ac_main_interface_fl"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-           />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/ac_main_interface_tl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
             android:layout_gravity="bottom" />
 
     </LinearLayout>

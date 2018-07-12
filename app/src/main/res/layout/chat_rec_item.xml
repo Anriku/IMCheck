@@ -9,8 +9,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chat_rec_item_civ"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/margin"
             android:src="@drawable/potrait" />
 
         <TextView

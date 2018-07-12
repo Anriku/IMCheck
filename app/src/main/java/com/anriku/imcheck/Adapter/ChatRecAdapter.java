@@ -15,7 +15,9 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Anriku on 2017/8/19.
@@ -44,13 +46,18 @@ public class ChatRecAdapter extends RecyclerView.Adapter<ChatRecAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.binding.chatRecItemObj.setText(emConversations.get(position).getLastMessage().getFrom());
-        holder.binding.chatRecItemTime.setText(String.valueOf(emConversations.get(position).getLastMessage().getMsgTime()));
+
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, Locale.CHINA);
+
+        holder.binding.chatRecItemTime.setText(String.valueOf(dateFormat.format(emConversations.get(position).getLastMessage().getMsgTime())));
 
         if (emConversations.get(position).getLastMessage().getType() == EMMessage.Type.TXT) {
             EMTextMessageBody messageBody = (EMTextMessageBody) emConversations.get(position).getLastMessage().getBody();
             holder.binding.chatRecItemMsg.setText(messageBody.getMessage());
         } else if (emConversations.get(position).getLastMessage().getType() == EMMessage.Type.VOICE) {
-            holder.binding.chatRecItemMsg.setText("[" + "语音" + "]");
+            holder.binding.chatRecItemMsg.setText("[语音]");
+        } else if (emConversations.get(position).getLastMessage().getType() == EMMessage.Type.IMAGE) {
+            holder.binding.chatRecItemMsg.setText("[图片]");
         }
 
         final int pos = position;
@@ -58,7 +65,7 @@ public class ChatRecAdapter extends RecyclerView.Adapter<ChatRecAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("is_group",emConversations.get(pos).isGroup());
+                intent.putExtra("is_group", emConversations.get(pos).isGroup());
                 intent.putExtra("obj", emConversations.get(pos).conversationId());
                 context.startActivity(intent);
             }
